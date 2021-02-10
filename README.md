@@ -1,2 +1,2 @@
-# model-browser: Browse models on Papers with Code
+# Browse ML models on Papers with Code
 
