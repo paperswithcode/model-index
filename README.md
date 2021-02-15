@@ -13,7 +13,8 @@ to have your library featured on the website.
 
 ## How model-index works
 
-There is a root file for the model index: `model-index.yml`. An example with a single model:
+There is a root file for the model index: `model-index.yml` that contains (or links to) all the metadata. 
+An example with a single model:
 
 ```yaml
 Models:
