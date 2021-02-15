@@ -58,9 +58,7 @@ Collections:
       - Auxiliary Classifier
       - Inception-v3 Module
     Metadata:
-      - FLOPs: 650658304
-        Parameters: 4383312
-        Training Data: ImageNet  
+      - Training Data: ImageNet  
         Training Techniques: 
           - RMSProp
           - Weight Decay
