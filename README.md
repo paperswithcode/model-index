@@ -1,4 +1,4 @@
-# `model-index` - maintain an index of ML models with results
+# model-index - maintain a source of truth for ML models and results
 
 `model-index` has two goals:
 - Make it easy to maintain a source-of-truth index of Machine Learning models and results 
