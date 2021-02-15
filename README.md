@@ -23,17 +23,17 @@ Models:
       - Auxiliary Classifier
       - Inception-v3 Module
     Metadata:
-      - FLOPs: 11462568384
-        Parameters: 23834568
-        Epochs: 90
-        Batch Size: 32
-        Training Data: ImageNet  
-        Training Techniques: 
-          - RMSProp
-          - Weight Decay
-          - Gradient Clipping
-          - Label Smoothing
-        Training Resources: 8x V100 GPUs  
+      FLOPs: 11462568384
+      Parameters: 23834568
+      Epochs: 90
+      Batch Size: 32
+      Training Data: ImageNet  
+      Training Techniques: 
+        - RMSProp
+        - Weight Decay
+        - Gradient Clipping
+        - Label Smoothing
+      Training Resources: 8x V100 GPUs  
     Results:
       - Task: Image Classification
         Dataset: ImageNet
@@ -58,13 +58,13 @@ Collections:
       - Auxiliary Classifier
       - Inception-v3 Module
     Metadata:
-      - Training Data: ImageNet  
-        Training Techniques: 
-          - RMSProp
-          - Weight Decay
-          - Gradient Clipping
-          - Label Smoothing
-        Training Resources: 8x V100 GPUs
+      Training Data: ImageNet  
+      Training Techniques: 
+        - RMSProp
+        - Weight Decay
+        - Gradient Clipping
+        - Label Smoothing
+      Training Resources: 8x V100 GPUs
     Paper: https://arxiv.org/abs/1512.00567v3
     Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
     README: docs/inception-v3-readme.md
