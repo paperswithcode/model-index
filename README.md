@@ -46,7 +46,7 @@ Models:
     README: docs/inception-v3-readme.md
 ```
 
-## Model Collections
+### Model Collections
 
 To keep related model together, you can create Collections. The metadata format for collections is the same as for models
 and all member models **inherit** all the metadata and can over-ride it if necessary. 
@@ -100,12 +100,12 @@ Models:
 In this example we have two variants of the `Inception v3` model, one trained for 90 epochs (the original from the paper)
 and an additional model trained for additional 30 epochs - `Inception v3 - 120 epochs`.  
 
-## Including metadata from other files
+### Including metadata from other files
 
 It might not be convenient to maintain a huge `model-index.yml` file in your repository. So `model-index` make it easy
 to stitch together metadata from many different sources. 
 
-## Importing a field value
+#### Importing fields
 
 For each field that expects a list of values you can provide a filename instead. For example:
 
@@ -118,7 +118,7 @@ Models:
 
 Both YAML and JSON are supported. The content of the file needs to conform to the structure  
 
-### Importing a whole YAML file
+#### Importing a whole YAML file
 
 Import in your `model-index.yml`:
 
@@ -129,7 +129,7 @@ Import:
 
 Here the `inception_v3` yaml file has the same format as the root `model-index.yml` file. 
 
-### Importing a whole JSON file
+#### Importing a whole JSON file
 
 The imported file can also be in JSON format, as long as it has the same structure as the YAML:
 
@@ -139,7 +139,7 @@ Import:
   - models/metadata/mnasnet_200.json
 ```
 
-### Importing a whole Markdown file
+#### Importing a whole Markdown file
 
 ```yaml
 Import:
@@ -168,7 +168,7 @@ Rank Expansion Networks (ReXNets) follow a set of new design principles for desi
 ....
 ``` 
 
-### Importing multiple files
+#### Importing multiple files
 
 Specify wildcards to import multiple files: 
 
@@ -182,4 +182,53 @@ Import:
 
 It is possible to generate all the data programatically as well. We provide a set of Data Classes to hold the metadata,
 link files together and check for any syntax errors. 
+
+## Checking the consistency of the model index
+
+To ensure the model index doesn't have any errors in its metadata you can run an automated check on the whole
+index, or an individual file:
+
+via the CLI:
+```shell script
+mi check     # check the whole index
+mi check models/metadata/inception_v3.json    # check one file
+```
+
+or programatically:
+
+```python
+import modelindex as mi
+
+mi.check()    # check the whole index
+mi.check("models/metadata/inception_v3.json")  # single file
+```
+
+## Querying the model-index
+
+It is possible to query the information in the model index through the CLI tool or programatically:
+
+To find all models with "Inception" in their name:
+
+```shell script
+mi search "Name: Inception"
+```
+
+or programmatically: 
+
+```python
+import modelindex as mi
+
+mi.search("Name: Inception")
+``` 
+
+## Uploading to Papers with Code
+
+To feature your library on Papers with Code, get in touch with `hello@paperswithcode.com` and the model index
+of your library will be automatically included into Papers with Code. 
+
+
+
+
+
+
 
