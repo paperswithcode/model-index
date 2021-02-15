@@ -38,8 +38,8 @@ Models:
       - Task: Image Classification
         Dataset: ImageNet
         Metrics:
-          - Top 1 Accuracy: 74.67%
-            Top 5 Accuracy: 92.1%
+          Top 1 Accuracy: 74.67%
+          Top 5 Accuracy: 92.1%
     Paper: https://arxiv.org/abs/1512.00567v3
     Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
     Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth 
@@ -78,8 +78,8 @@ Models:
       - Task: Image Classification
         Dataset: ImageNet
         Metrics:
-          - Top 1 Accuracy: 74.67%
-            Top 5 Accuracy: 92.1%
+          Top 1 Accuracy: 74.67%
+          Top 5 Accuracy: 92.1%
     Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth
   
   - Name: Inception v3 - 120 epochs
@@ -90,8 +90,8 @@ Models:
       - Task: Image Classification
         Dataset: ImageNet
         Metrics:
-          - Top 1 Accuracy: 75.1%
-            Top 5 Accuracy: 93.1%
+          Top 1 Accuracy: 75.1%
+          Top 5 Accuracy: 93.1%
     Weights: https://download.pytorch.org/models/inception_v3_google-120-1a9a5afd.pth
 ```
 
@@ -105,7 +105,7 @@ to stitch together metadata from many different sources.
 
 #### Importing fields
 
-For each field that expects a list of values you can provide a filename instead. For example:
+For each field that expects a list or dictionary, you can provide a filename instead. For example:
 
 ```yaml
 Models:
