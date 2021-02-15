@@ -73,7 +73,7 @@ Models:
   - Name: Inception v3 - 90 epochs
     In Collection: Inception v3 
     Metadata:
-      - Epochs: 90
+      Epochs: 90
     Results:
       - Task: Image Classification
         Dataset: ImageNet
@@ -85,7 +85,7 @@ Models:
   - Name: Inception v3 - 120 epochs
     In Collection: Inception v3
     Metadata:
-      - Epochs: 120
+      Epochs: 120
     Results:
       - Task: Image Classification
         Dataset: ImageNet
