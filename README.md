@@ -19,9 +19,6 @@ An example with a single model:
 ```yaml
 Models:
   - Name: Inception v3
-    Architecture:
-      - Auxiliary Classifier
-      - Inception-v3 Module
     Metadata:
       FLOPs: 11462568384
       Parameters: 23834568
@@ -33,7 +30,10 @@ Models:
         - Weight Decay
         - Gradient Clipping
         - Label Smoothing
-      Training Resources: 8x V100 GPUs  
+      Training Resources: 8x V100 GPUs
+      Architecture:
+        - Auxiliary Classifier
+        - Inception-v3 Module
     Results:
       - Task: Image Classification
         Dataset: ImageNet
@@ -54,9 +54,6 @@ and all member models **inherit** all the metadata and can over-ride it if neces
 ```yaml
 Collections:
   - Name: Inception v3
-    Architecture:
-      - Auxiliary Classifier
-      - Inception-v3 Module
     Metadata:
       Training Data: ImageNet  
       Training Techniques: 
@@ -65,6 +62,9 @@ Collections:
         - Gradient Clipping
         - Label Smoothing
       Training Resources: 8x V100 GPUs
+      Architecture:
+        - Auxiliary Classifier
+        - Inception-v3 Module
     Paper: https://arxiv.org/abs/1512.00567v3
     Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
     README: docs/inception-v3-readme.md
