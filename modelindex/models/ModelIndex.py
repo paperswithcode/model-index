@@ -50,7 +50,7 @@ class ModelIndex(BaseModelIndex):
 
     @property
     def collections(self):
-        return self.data["Models"]
+        return self.data["Collections"]
 
     @collections.setter
     def collections(self, value):

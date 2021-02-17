@@ -158,10 +158,16 @@ def test_model():
          'Paper': 'https://arxiv.org/abs/1512.00567v3',
          'Code': 'https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442',
          'Weights': 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth',
+         "Config": "config/myconfig.json",
          'README': 'docs/inception-v3-readme.md'}
     )
 
     assert m.name == 'Inception v3'
+    assert m.paper == 'https://arxiv.org/abs/1512.00567v3'
+    assert m.weights == "https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth"
+    assert m.readme == "docs/inception-v3-readme.md"
+    assert m.code == "https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442"
+    assert m.config == "config/myconfig.json"
     assert isinstance(m.metadata, Metadata)
     assert m.metadata.data == {'FLOPs': 11462568384,
                       'Parameters': 23834568,
@@ -189,6 +195,39 @@ def test_model():
     assert isinstance(m.results[0], Result)
     assert m.results[0].dataset == "ImageNet2"
 
+    # setters
+    m.paper = "new paper"
+    assert m.paper == "new paper"
+
+    m.code = "new code"
+    assert m.code == "new code"
+
+    m.weights = "new w"
+    assert m.weights == "new w"
+
+    m.config = "new c"
+    assert m.config == "new c"
+
+    m.readme = "readme1"
+    assert m.readme == "readme1"
+
+    m.in_collection = "in col1"
+    assert m.in_collection == "in col1"
+
+    m.metadata = {'FLOPs': 122,
+                  'Parameters': 111,
+                  'Epochs': 90,
+                  'Batch Size': 32,
+                  'Training Data': 'ImageNet',
+                  'Training Techniques': ['RMSProp',
+                                          'Weight Decay',
+                                          'Gradient Clipping',
+                                          'Label Smoothing'],
+                  'Training Resources': '8x V100 GPUs',
+                  'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+
+    assert isinstance(m.metadata, Metadata)
+    assert m.metadata.data["FLOPs"] == 122
 
 def test_model_list():
     ModelList()
@@ -253,3 +292,11 @@ def test_collections():
     )
     assert m.in_collection == 'Inception v3'
 
+
+def test_collections_load():
+    mi = modelindex.load("tests/test-mi/03_col")
+
+    assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
+
+    assert isinstance(mi.collections, CollectionList)
