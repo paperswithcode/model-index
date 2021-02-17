@@ -1,11 +1,16 @@
 import modelindex
 from modelindex import Metadata
+from modelindex.models.Model import Model
+from modelindex.models.ModelList import ModelList
+from modelindex.models.Result import Result
+from modelindex.models.ResultList import ResultList
 
 
 def test_singlefile():
     mi = modelindex.load("tests/test-mi/01_base")
 
     assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
 
 
 def test_metadata():
@@ -47,4 +52,167 @@ def test_metadata():
     }
 
 
+def test_metadata_from_dict():
+    m = Metadata.from_dict(
+        {'FLOPs': 11462568384,
+         'Parameters': 23834568,
+         'Epochs': 90,
+         'Batch Size': 32,
+         'Training Data': 'ImageNet',
+         'Training Techniques': ['RMSProp',
+                                 'Weight Decay',
+                                 'Gradient Clipping',
+                                 'Label Smoothing'],
+         'Training Resources': '8x V100 GPUs',
+         'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+    )
 
+    assert m.data == {'FLOPs': 11462568384,
+                      'Parameters': 23834568,
+                      'Epochs': 90,
+                      'Batch Size': 32,
+                      'Training Data': 'ImageNet',
+                      'Training Techniques': ['RMSProp',
+                                              'Weight Decay',
+                                              'Gradient Clipping',
+                                              'Label Smoothing'],
+                      'Training Resources': '8x V100 GPUs',
+                      'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+
+    # mixed case and _ instead of space
+
+    m = Metadata.from_dict(
+        {'flops': 11462568384,
+         'Parameters': 23834568,
+         'epochs': 90,
+         'batch_size': 32,
+         'Training Data': 'ImageNet',
+         'Training Techniques': ['RMSProp',
+                                 'Weight Decay',
+                                 'Gradient Clipping',
+                                 'Label Smoothing'],
+         'Training Resources': '8x V100 GPUs',
+         'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+    )
+
+    assert m.data == {'FLOPs': 11462568384,
+                      'Parameters': 23834568,
+                      'Epochs': 90,
+                      'Batch Size': 32,
+                      'Training Data': 'ImageNet',
+                      'Training Techniques': ['RMSProp',
+                                              'Weight Decay',
+                                              'Gradient Clipping',
+                                              'Label Smoothing'],
+                      'Training Resources': '8x V100 GPUs',
+                      'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+
+
+def test_result_list():
+    ResultList()
+
+    r = ResultList(
+        [{
+            "task": "Image Classification",
+            "dataset": "ImageNet",
+            "metrics": {
+                "Top 1 Accuracy": "88%",
+                "Top 5 Accuracy": "92%"
+            }
+        }]
+    )
+
+    assert len(r.data) == 1
+    assert isinstance(r.data[0], Result)
+    assert r.data[0].data == {
+            "Task": "Image Classification",
+            "Dataset": "ImageNet",
+            "Metrics": {
+                "Top 1 Accuracy": "88%",
+                "Top 5 Accuracy": "92%"
+            }
+        }
+
+
+def test_model():
+    Model(name="abc")
+
+    m = Model.from_dict(
+        {'Name': 'Inception v3',
+         'Metadata': {'FLOPs': 11462568384,
+                      'Parameters': 23834568,
+                      'Epochs': 90,
+                      'Batch Size': 32,
+                      'Training Data': 'ImageNet',
+                      'Training Techniques': ['RMSProp',
+                                              'Weight Decay',
+                                              'Gradient Clipping',
+                                              'Label Smoothing'],
+                      'Training Resources': '8x V100 GPUs',
+                      'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']},
+         'Results': [{'Task': 'Image Classification',
+                      'Dataset': 'ImageNet',
+                      'Metrics': {'Top 1 Accuracy': '74.67%', 'Top 5 Accuracy': '92.1%'}}],
+         'Paper': 'https://arxiv.org/abs/1512.00567v3',
+         'Code': 'https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442',
+         'Weights': 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth',
+         'README': 'docs/inception-v3-readme.md'}
+    )
+
+    assert m.name == 'Inception v3'
+    assert isinstance(m.metadata, Metadata)
+    assert m.metadata.data == {'FLOPs': 11462568384,
+                      'Parameters': 23834568,
+                      'Epochs': 90,
+                      'Batch Size': 32,
+                      'Training Data': 'ImageNet',
+                      'Training Techniques': ['RMSProp',
+                                              'Weight Decay',
+                                              'Gradient Clipping',
+                                              'Label Smoothing'],
+                      'Training Resources': '8x V100 GPUs',
+                      'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+
+    assert isinstance(m.results, ResultList)
+    assert m.readme == 'docs/inception-v3-readme.md'
+
+    m.name = "New name"
+    assert m.name == "New name"
+    assert m.data["Name"] == "New name"
+
+    m.results = {'Task': 'Image Classification',
+                 'Dataset': 'ImageNet2',
+                 'Metrics': {'Top 1 Accuracy': '74.67%', 'Top 5 Accuracy': '92.1%'}}
+
+    assert isinstance(m.results[0], Result)
+    assert m.results[0].dataset == "ImageNet2"
+
+
+def test_model_list():
+    ModelList()
+
+    ml = ModelList(
+        {'Name': 'Inception v1',
+         'Metadata': {'FLOPs': 11462568384,
+                      'Parameters': 23834568,
+                      'Epochs': 90,
+                      'Batch Size': 32,
+                      'Training Data': 'ImageNet',
+                      'Training Techniques': ['RMSProp',
+                                              'Weight Decay',
+                                              'Gradient Clipping',
+                                              'Label Smoothing'],
+                      'Training Resources': '8x V100 GPUs',
+                      'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']},
+         'Results': [{'Task': 'Image Classification',
+                      'Dataset': 'ImageNet',
+                      'Metrics': {'Top 1 Accuracy': '74.67%', 'Top 5 Accuracy': '92.1%'}}],
+         'Paper': 'https://arxiv.org/abs/1512.00567v3',
+         'Code': 'https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442',
+         'Weights': 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth',
+         'README': 'docs/inception-v3-readme.md'}
+    )
+
+    assert len(ml.models) == 1
+    assert isinstance(ml.models[0], Model)
+    assert ml.models[0].name == "Inception v1"

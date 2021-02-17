@@ -1,8 +1,10 @@
+from typing import List, Union, Dict
+
 
 class BaseModelIndex:
 
     def __init__(self,
-                 data: dict = None,
+                 data: Union[List,Dict] = None,
                  filepath: str = None,
                  ):
         if data is None:

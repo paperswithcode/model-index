@@ -1,6 +1,7 @@
-from typing import Union
+from typing import Union, Dict
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
+from modelindex.utils import lowercase_keys
 
 
 class Metadata(BaseModelIndex):
@@ -47,6 +48,29 @@ class Metadata(BaseModelIndex):
             data=data,
             filepath=_filepath
         )
+
+    @staticmethod
+    def from_dict(d: Dict, _filepath: str = None):
+        lc_keys = lowercase_keys(d)
+
+        dd = d.copy()
+        for field_name in Metadata.COMMON_FIELDS:
+            key = field_name.lower()
+            if key in lc_keys:
+                dd[field_name] = dd.pop(lc_keys[key])
+
+            # try with _ instead of space in the field name
+            if " " in field_name:
+                key = field_name.lower().replace(" ", "_")
+                if key in lc_keys:
+                    dd[field_name] = dd.pop(lc_keys[key])
+
+        return Metadata(
+            _filepath=_filepath,
+            **dd,
+        )
+
+
 
 
 
