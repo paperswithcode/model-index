@@ -21,10 +21,10 @@ class Model(BaseModelIndex):
                  _filepath: str = None,
                  ):
 
-        if isinstance(metadata, dict):
+        if metadata is not None and not isinstance(metadata, Metadata):
             metadata = Metadata.from_dict(metadata)
 
-        if isinstance(results, list) or isinstance(results, Result):
+        if results is not None and not isinstance(results, ResultList):
             results = ResultList(results)
 
         d = {
@@ -132,14 +132,14 @@ class Model(BaseModelIndex):
 
     @metadata.setter
     def metadata(self, value):
-        if isinstance(value, dict):
+        if value is not None and not isinstance(value, Metadata):
             self.data["Metadata"] = Metadata.from_dict(value)
         else:
             self.data["Metadata"] = value
 
     @results.setter
     def results(self, value):
-        if isinstance(value, list) or isinstance(value, Result) or isinstance(value, dict):
+        if value is not None and not isinstance(value, ResultList):
             self.data["Results"] = ResultList(value)
         else:
             self.data["Results"] = value

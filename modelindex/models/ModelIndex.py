@@ -16,7 +16,7 @@ class ModelIndex(BaseModelIndex):
         lc_keys = lowercase_keys(data)
         if "models" in lc_keys:
             models = data[lc_keys["models"]]
-            if not isinstance(models, ModelList):
+            if models is not None and not isinstance(models, ModelList):
                 models = ModelList(models)
 
             d["Models"] = models
