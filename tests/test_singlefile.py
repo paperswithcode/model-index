@@ -241,3 +241,15 @@ def test_collections():
     assert len(cl.collections) == 1
     assert cl.collections[0].name == "Inception v3"
 
+
+    m = Model.from_dict(
+        {'Name': 'Inception v3 - 90 epochs',
+         'In Collection': 'Inception v3',
+         'Metadata': {'Epochs': 90},
+         'Results': [{'Task': 'Image Classification',
+                      'Dataset': 'ImageNet',
+                      'Metrics': {'Top 1 Accuracy': '74.67%', 'Top 5 Accuracy': '92.1%'}}],
+         'Weights': 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth'}
+    )
+    assert m.in_collection == 'Inception v3'
+

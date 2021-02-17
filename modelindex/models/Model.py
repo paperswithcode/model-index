@@ -1,4 +1,4 @@
-from typing import Dict, Union
+from typing import Dict, Union, List
 
 from modelindex.models.Metadata import Metadata
 from modelindex.models.BaseModelIndex import BaseModelIndex
@@ -18,6 +18,7 @@ class Model(BaseModelIndex):
                  weights: str = None,
                  config: str = None,
                  readme: str = None,
+                 in_collection: Union[str, List[str]] = None,
                  _filepath: str = None,
                  ):
 
@@ -36,6 +37,7 @@ class Model(BaseModelIndex):
             "Weights": weights,
             "Config": config,
             "README": readme,
+            "In Collection": in_collection,
         }
 
         # Only non-empty items
@@ -59,6 +61,7 @@ class Model(BaseModelIndex):
             "readme",
             "metadata",
             "results",
+            "in_collection",
         ]
 
         dd = {}
@@ -66,6 +69,12 @@ class Model(BaseModelIndex):
             key = field_name.lower()
             if key in lc_keys:
                 dd[field_name] = d[lc_keys[key]]
+
+            # try with " " instead of "_" in the field name
+            if "_" in field_name:
+                key = field_name.lower().replace("_", " ")
+                if key in lc_keys:
+                    dd[field_name] = d[lc_keys[key]]
 
         return Model(
             _filepath=_filepath,
@@ -105,6 +114,10 @@ class Model(BaseModelIndex):
     def results(self):
         return self.data["Results"]
 
+    @property
+    def in_collection(self):
+        return self.data["In Collection"]
+
     # Setters
     @name.setter
     def name(self, value):
@@ -129,6 +142,10 @@ class Model(BaseModelIndex):
     @readme.setter
     def readme(self, value):
         self.data["README"] = value
+
+    @in_collection.setter
+    def in_collection(self, value):
+        self.data["In Collection"] = value
 
     @metadata.setter
     def metadata(self, value):
