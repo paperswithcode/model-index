@@ -1,5 +1,7 @@
 import modelindex
 from modelindex import Metadata
+from modelindex.models.Collection import Collection
+from modelindex.models.CollectionList import CollectionList
 from modelindex.models.Model import Model
 from modelindex.models.ModelList import ModelList
 from modelindex.models.Result import Result
@@ -216,3 +218,26 @@ def test_model_list():
     assert len(ml.models) == 1
     assert isinstance(ml.models[0], Model)
     assert ml.models[0].name == "Inception v1"
+
+
+def test_collections():
+    Collection(name="abc")
+    CollectionList()
+
+    cl = CollectionList(
+        [{'Name': 'Inception v3',
+          'Metadata': {'Training Data': 'ImageNet',
+                       'Training Techniques': ['RMSProp',
+                                               'Weight Decay',
+                                               'Gradient Clipping',
+                                               'Label Smoothing'],
+                       'Training Resources': '8x V100 GPUs',
+                       'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']},
+          'Paper': 'https://arxiv.org/abs/1512.00567v3',
+          'Code': 'https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442',
+          'README': 'docs/inception-v3-readme.md'}]
+    )
+
+    assert len(cl.collections) == 1
+    assert cl.collections[0].name == "Inception v3"
+

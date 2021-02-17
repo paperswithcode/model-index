@@ -1,4 +1,5 @@
 from modelindex.models.BaseModelIndex import BaseModelIndex
+from modelindex.models.CollectionList import CollectionList
 from modelindex.models.ModelList import ModelList
 from modelindex.utils import lowercase_keys
 
@@ -21,6 +22,13 @@ class ModelIndex(BaseModelIndex):
 
             d["Models"] = models
 
+        if "collections" in lc_keys:
+            collections = data[lc_keys["collections"]]
+            if collections is not None and not isinstance(collections, CollectionList):
+                collections = CollectionList(collections)
+
+            d["Collections"] = collections
+
         super().__init__(
             data=d,
             filepath=filepath
@@ -39,3 +47,11 @@ class ModelIndex(BaseModelIndex):
     @models.setter
     def models(self, value):
         self.data["Models"] = value
+
+    @property
+    def collections(self):
+        return self.data["Models"]
+
+    @collections.setter
+    def collections(self, value):
+        self.data["Collections"] = value
