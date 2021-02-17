@@ -1,17 +1,17 @@
-from modelindex.consts import MODEL_INDEX_ROOT_FILE
+from modelindex.models.MIDict import MIDict
 
 
 class BaseModelIndex:
 
     def __init__(self,
                  data: dict = None,
-                 filepath: str = MODEL_INDEX_ROOT_FILE,
+                 filepath: str = None,
                  ):
-
         if data is None:
             data = {}
 
         self.filepath = filepath
-        self.data = data
+        self.data = MIDict(data, self)
 
-
+    def _update_data_callback(self):
+        pass
