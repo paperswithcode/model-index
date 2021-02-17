@@ -18,12 +18,6 @@ class ModelIndex(BaseModelIndex):
 
         self.lc_keys = lowercase_keys(data)
 
-    def models(self):
-        pass
-
-    def collections(self):
-        pass
-
     @staticmethod
     def from_dict(d: dict, filepath: str = None):
         return ModelIndex(d, filepath)

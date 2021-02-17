@@ -1,6 +1,7 @@
 import modelindex
 from modelindex import Metadata
 
+
 def test_singlefile():
     mi = modelindex.load("tests/test-mi/01_base")
 
@@ -38,6 +39,11 @@ def test_metadata():
     assert meta.data == {
         "FLOPs": 1000,
         "my_argument": 11
+    }
+
+    del meta.data["my_argument"]
+    assert meta.data == {
+        "FLOPs": 1000,
     }
 
 
