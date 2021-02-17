@@ -15,7 +15,7 @@ jobs:
           command: pip install -r requirements-dev.txt
           name: Install requirements
       - run:
-          command: py.test
+          command: py.test --cov
           name: Test
 
 workflows:
