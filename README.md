@@ -49,7 +49,7 @@ Models:
 ### Model Collections
 
 To keep related model together, you can create Collections. The metadata format for collections is the same as for models
-and all member models **inherit** all the metadata and can over-ride it if necessary. 
+and all member models **inherit** all the metadata and can override/add to it. 
 
 ```yaml
 Collections:
@@ -114,7 +114,7 @@ Models:
     Results: models/metadata/inception_v3_results.json
 ``` 
 
-Both YAML and JSON are supported. The content of the file needs to conform to the structure  
+Both YAML and JSON are supported. The content of the file needs to conform to the expected structure specified above. 
 
 #### Importing a whole YAML file
 
