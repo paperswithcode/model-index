@@ -37,3 +37,13 @@ class ModelList(BaseModelIndex):
     @property
     def models(self):
         return self.data
+
+    def add(self, model: Union[Model,Dict]):
+        if isinstance(model, dict):
+            self.data.append(Model.from_dict(model))
+        elif isinstance(model, Model):
+            self.data.append(model)
+
+    def __len__(self):
+        return len(self.data)
+

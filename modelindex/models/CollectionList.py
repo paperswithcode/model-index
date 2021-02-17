@@ -37,3 +37,9 @@ class CollectionList(BaseModelIndex):
     @property
     def collections(self):
         return self.data
+
+    def add(self, col: Union[Collection,Dict]):
+        if isinstance(col, dict):
+            self.data.append(Collection.from_dict(col))
+        elif isinstance(col, Collection):
+            self.data.append(Collection)
