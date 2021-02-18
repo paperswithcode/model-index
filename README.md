@@ -53,46 +53,52 @@ and all member models **inherit** all the metadata and can override/add to it.
 
 ```yaml
 Collections:
-  - Name: Inception v3
+  - Name: Mask R-CNN
     Metadata:
-      Training Data: ImageNet  
+      Training Data: COCO
       Training Techniques: 
-        - RMSProp
-        - Weight Decay
-        - Gradient Clipping
-        - Label Smoothing
+        - SGD with Momentum
       Training Resources: 8x V100 GPUs
       Architecture:
-        - Auxiliary Classifier
-        - Inception-v3 Module
-    Paper: https://arxiv.org/abs/1512.00567v3
-    Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
-    README: docs/inception-v3-readme.md
+        - RoI Align
+        - RPN
+    Paper: https://arxiv.org/abs/1703.06870v3
+    README: docs/maskrcnn.md
 
 Models:
-  - Name: Inception v3 - 90 epochs
-    In Collection: Inception v3 
+  - Name: Mask R-CNN (R101-C4, 3x)
+    In Collection: Mask R-CNN 
     Metadata:
-      Epochs: 90
+      inference time (s/im):	0.145
+      train time (s/iter):	0.652
+      Training Memory (GB):	6.3
     Results:
-      - Task: Image Classification
-        Dataset: ImageNet
+      - Task: Object Detection
+        Dataset: COCO minival
         Metrics:
-          Top 1 Accuracy: 74.67%
-          Top 5 Accuracy: 92.1%
-    Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth
+          box AP: 42.6
+      - Task: Instance Segmentation
+        Dataset: COCO minival
+        Metrics:
+          mask AP: 36.7
+    Weights: https://dl.fbaipublicfiles.com/detectron2/COCO-InstanceSegmentation/mask_rcnn_R_101_C4_3x/138363239/model_final_a2914c.pkl
   
-  - Name: Inception v3 - 120 epochs
-    In Collection: Inception v3
+  - Name: Mask R-CNN (R50-C4, 3x)
+    In Collection: Mask R-CNN 
     Metadata:
-      Epochs: 120
+      inference time (s/im):	0.111
+      train time (s/iter):	0.575
+      Training Memory (GB):	5.2
     Results:
-      - Task: Image Classification
-        Dataset: ImageNet
+      - Task: Object Detection
+        Dataset: COCO minival
         Metrics:
-          Top 1 Accuracy: 75.1%
-          Top 5 Accuracy: 93.1%
-    Weights: https://download.pytorch.org/models/inception_v3_google-120-1a9a5afd.pth
+          box AP: 39.8
+      - Task: Instance Segmentation
+        Dataset: COCO minival
+        Metrics:
+          mask AP: 34.4
+    Weights: https://dl.fbaipublicfiles.com/detectron2/COCO-InstanceSegmentation/mask_rcnn_R_50_C4_3x/137849525/model_final_4ce675.pkl
 ```
 
 In this example we have two variants of the `Inception v3` model, one trained for 90 epochs (the original from the paper)
