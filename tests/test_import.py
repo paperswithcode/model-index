@@ -51,7 +51,7 @@ def test_metadata_imports():
     }
 
 
-def test_metadata_imports():
+def test_models_imports():
     mi = modelindex.load("tests/test-mi/07_import_models")
 
     assert "Models" in mi.data
@@ -64,4 +64,20 @@ def test_metadata_imports():
 
     assert mi.models[1].metadata.data == {
         "Epochs": 120,
+    }
+
+
+def test_models_imports_json():
+    mi = modelindex.load("tests/test-mi/08_import_models_json")
+
+    assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
+    assert len(mi.models) == 2
+
+    assert mi.models[0].metadata.data == {
+        "Epochs": 90
+    }
+
+    assert mi.models[1].metadata.data == {
+        "Epochs": 111,
     }

@@ -1,0 +1,4 @@
+Collections: col1.yaml
+Models:
+  - model1.yaml
+  - model2.json
