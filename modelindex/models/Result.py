@@ -23,6 +23,18 @@ class Result(BaseModelIndex):
             filepath=_filepath
         )
 
+    def check(self, silent=True):
+        self.check_errors = []
+
+        for field in ["Task", "Dataset", "Metrics"]:
+            if field not in self.data or self.data[field] is None:
+                self.check_errors.append(f"Field '{field}' is missing")
+
+        if "Metrics" in self.data and self.data["Metrics"]:
+            m = self.data["Metrics"]
+            if not isinstance(m, list) and not isinstance(m, dict):
+                self.check_errors.append("The 'Metrics' fields needs to be either a dict or a list")
+
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
         lc_keys = lowercase_keys(d)
