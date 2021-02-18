@@ -49,9 +49,10 @@ class ModelList(BaseModelIndex):
     def models(self):
         return self.data
 
-    def add(self, model: Union[Model, Dict]):
+    def add(self, model: Union[Model, Dict], _filepath: str = None):
+        model_filepath = _filepath if _filepath is not None else self.filepath
         if isinstance(model, dict):
-            self.data.append(Model.from_dict(model, self.filepath))
+            self.data.append(Model.from_dict(model, model_filepath))
         elif isinstance(model, Model):
             self.data.append(model)
 

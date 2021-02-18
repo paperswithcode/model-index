@@ -23,14 +23,15 @@ class Result(BaseModelIndex):
             filepath=_filepath
         )
 
-    def check(self, silent=True):
+    def _check(self, silent=True):
         for field in ["Task", "Dataset", "Metrics"]:
             if field not in self.data or self.data[field] is None:
                 self.check_errors.add(f"Field '{field}' is missing")
 
         for field in ["Task", "Dataset"]:
             if field in self.data and self.data[field] is not None and not isinstance(self.data[field], str):
-                self.check_errors.add(f"The '{field}' field should be a string")
+                name = type(self.data[field]).__name__
+                self.check_errors.add(f"The '{field}' field should be a string but got {name}")
 
         if "Metrics" in self.data and self.data["Metrics"]:
             m = self.data["Metrics"]

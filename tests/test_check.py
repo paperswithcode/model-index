@@ -15,6 +15,10 @@ def test_results_check():
     assert len(e) == 1
     assert "dataset" in e[0].lower()
 
+    msgs = mi.check(silent=True)
+    assert len(msgs) == 1
+    assert "Results[0]" in msgs[0]
+
     mi = modelindex.load("tests/test-mi/09_check/mi2.yml")
 
     e = mi.models[0].results[0].check_errors
@@ -43,6 +47,9 @@ def test_results_check():
     assert "what" in mi.models[0].check_errors[0]
     assert "not exist" in mi.models[0].check_errors[0]
 
+    msgs = mi.check(silent=True)
+    assert len(msgs) == 4
+
     mi = modelindex.load("tests/test-mi/09_check/mi6.yml")
     assert len(mi.models[0].check_errors) == 1
     assert "what" in mi.models[0].check_errors[0]
@@ -51,3 +58,15 @@ def test_results_check():
     assert len(mi.models[0].results.check_errors) == 1
     assert "django" in mi.models[0].results.check_errors[0]
     assert "not exist" in mi.models[0].results.check_errors[0]
+
+    mi = modelindex.load("tests/test-mi/09_check/mi7.yml")
+    assert len(mi.check_errors) == 1
+    assert "not exist" in mi.check_errors[0]
+
+    mi = modelindex.load("tests/test-mi/10_import_meta_check")
+
+    assert mi.models[0].filepath.endswith("meta/m1.yml")
+    msgs = mi.check(silent=True)
+
+    assert "noexist.json" in msgs[0]
+    assert "wrongsubdir" in msgs[1]

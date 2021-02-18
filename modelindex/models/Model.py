@@ -65,7 +65,7 @@ class Model(BaseModelIndex):
             check_errors=check_errors,
         )
 
-    def check(self, silent=True):
+    def _check(self, silent=True):
         if self.name is None or self.name == "":
             self.check_errors.add("Field 'Name' cannot be empty")
 

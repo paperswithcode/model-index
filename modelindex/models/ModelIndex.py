@@ -3,7 +3,7 @@ from ordered_set import OrderedSet
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.CollectionList import CollectionList
 from modelindex.models.ModelList import ModelList
-from modelindex.utils import lowercase_keys, load_any_file
+from modelindex.utils import lowercase_keys, load_any_file, full_filepath
 
 
 class ModelIndex(BaseModelIndex):
@@ -53,22 +53,26 @@ class ModelIndex(BaseModelIndex):
                 imp = list(imp)
 
             for import_file in imp:
-                raw, md_name = load_any_file(import_file, filepath)
+                try:
+                    fullpath = full_filepath(import_file, filepath)
+                    raw, md_name = load_any_file(import_file, filepath)
 
-                raw_lc_keys = lowercase_keys(raw)
-                if "models" in raw_lc_keys:
-                    additional_models = raw[raw_lc_keys["models"]]
-                    if not isinstance(additional_models, list):
-                        additional_models = list(additional_models)
-                    for model in additional_models:
-                        d["Models"].add(model)
+                    raw_lc_keys = lowercase_keys(raw)
+                    if "models" in raw_lc_keys:
+                        additional_models = raw[raw_lc_keys["models"]]
+                        if not isinstance(additional_models, list):
+                            additional_models = list(additional_models)
+                        for model in additional_models:
+                            d["Models"].add(model, fullpath)
 
-                if "collections" in raw_lc_keys:
-                    additional_cols = raw[raw_lc_keys["collections"]]
-                    if not isinstance(additional_cols, list):
-                        additional_cols = list(additional_cols)
-                    for col in additional_cols:
-                        d["Collections"].add(col)
+                    if "collections" in raw_lc_keys:
+                        additional_cols = raw[raw_lc_keys["collections"]]
+                        if not isinstance(additional_cols, list):
+                            additional_cols = list(additional_cols)
+                        for col in additional_cols:
+                            d["Collections"].add(col, fullpath)
+                except (IOError, ValueError) as e:
+                    check_errors.add(str(e))
 
         super().__init__(
             data=d,
@@ -97,3 +101,35 @@ class ModelIndex(BaseModelIndex):
     @collections.setter
     def collections(self, value):
         self.data["Collections"] = value
+
+    def check(self, silent=False):
+        """Check if the mandatory fields are present and if file references are valid.
+
+        Args:
+            silent (bool): If to just return a list of errors without printing them out
+
+        Returns:
+            A list of errors
+
+        """
+        errors = self.collect_check_errors()
+
+        # only keep non-empty
+        errors = [e for e in errors if e["errors"]]
+
+        errors_formatted = []
+        for e in errors:
+            for msg in e["errors"]:
+                errors_formatted.append(
+                    "%s: %s: %s" % (
+                        e["filepath"],
+                        e["type"],
+                        msg
+                    )
+                )
+
+        if not silent:
+            for e in errors_formatted:
+                print(e)
+
+        return errors_formatted

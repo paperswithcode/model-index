@@ -58,7 +58,7 @@ def load_any_file(path: str, cur_filepath: str = None):
     path = full_filepath(path, cur_filepath)
 
     if not os.path.exists(path):
-        raise IOError(f"File {path} does not exist.")
+        raise IOError(f"File '{path}' does not exist.")
 
     md_path = None
     if path.endswith(".yml") or path.endswith(".yaml"):

@@ -49,7 +49,7 @@ class Metadata(BaseModelIndex):
             filepath=_filepath
         )
 
-    def check(self, silent=True):
+    def _check(self, silent=True):
         if not isinstance(self.data, dict) and not isinstance(self.data, list):
             self.check_errors.add("Metadata should be either a list or a dict")
 
