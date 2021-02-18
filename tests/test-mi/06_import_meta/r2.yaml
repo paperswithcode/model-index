@@ -1,0 +1,5 @@
+- Task: Image Classification
+  Dataset: ImageNet
+  Metrics:
+    Top 1 Accuracy: 75.1%
+    Top 5 Accuracy: 93.1%

@@ -4,7 +4,7 @@ from modelindex.models.Metadata import Metadata
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Result import Result
 from modelindex.models.ResultList import ResultList
-from modelindex.utils import lowercase_keys
+from modelindex.utils import lowercase_keys, full_filepath, load_any_file
 
 
 class Model(BaseModelIndex):
@@ -21,8 +21,9 @@ class Model(BaseModelIndex):
                  in_collection: Union[str, List[str]] = None,
                  _filepath: str = None,
                  ):
-
-        if metadata is not None and not isinstance(metadata, Metadata):
+        if metadata is not None and isinstance(metadata, str):
+            metadata = Metadata.from_file(metadata, _filepath)
+        elif metadata is not None and not isinstance(metadata, Metadata):
             metadata = Metadata.from_dict(metadata, _filepath)
 
         if results is not None and isinstance(results, str):
@@ -82,6 +83,28 @@ class Model(BaseModelIndex):
             _filepath=_filepath,
             **dd,
         )
+
+    @staticmethod
+    def from_file(filepath: str = None, parent_filepath: str = None):
+        fullpath = full_filepath(filepath, parent_filepath)
+        raw, md_path = load_any_file(filepath, parent_filepath)
+        d = raw
+        if isinstance(raw, dict):
+            lc_keys = lowercase_keys(raw)
+            if "model" in lc_keys:
+                d = raw[lc_keys["model"]]
+            elif "models" in lc_keys:
+                # called Model.from_file() on a model list, fallback to ModelList
+                d = raw[lc_keys["models"]]
+                if isinstance(d, list):
+                    from modelindex.models.ModelList import ModelList
+                    return ModelList(d, fullpath)
+
+            return Model.from_dict(d, fullpath)
+        else:
+            raise ValueError(f"Expected a model dict, but got "
+                             f"something else in file '{fullpath}'")
+
 
     # Getters
     @property

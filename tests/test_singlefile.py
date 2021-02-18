@@ -53,6 +53,15 @@ def test_metadata():
         "FLOPs": 1000,
     }
 
+    meta = Metadata.from_dict({
+        "Epochs": 120,
+        "my custom parameter": "abc"
+    })
+    assert meta.data == {
+        "Epochs": 120,
+        "my custom parameter": "abc"
+    }
+
 
 def test_metadata_from_dict():
     m = Metadata.from_dict(

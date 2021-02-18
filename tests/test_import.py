@@ -33,3 +33,35 @@ def test_result_imports():
         'Dataset': 'ImageNet',
         'Metrics': {'Top 1 Accuracy': '75.1%', 'Top 5 Accuracy': '93.1%'}}
 
+
+def test_metadata_imports():
+    mi = modelindex.load("tests/test-mi/06_import_meta")
+
+    assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
+    assert len(mi.models) == 2
+
+    assert mi.models[0].metadata.data == {
+        "Epochs": 90
+    }
+
+    assert mi.models[1].metadata.data == {
+        "Epochs": 120,
+        "my custom parameter": "abc"
+    }
+
+
+def test_metadata_imports():
+    mi = modelindex.load("tests/test-mi/07_import_models")
+
+    assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
+    assert len(mi.models) == 2
+
+    assert mi.models[0].metadata.data == {
+        "Epochs": 90
+    }
+
+    assert mi.models[1].metadata.data == {
+        "Epochs": 120,
+    }

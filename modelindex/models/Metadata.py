@@ -1,7 +1,7 @@
 from typing import Union, Dict
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
-from modelindex.utils import lowercase_keys
+from modelindex.utils import lowercase_keys, full_filepath, load_any_file
 
 
 class Metadata(BaseModelIndex):
@@ -69,6 +69,18 @@ class Metadata(BaseModelIndex):
             _filepath=_filepath,
             **dd,
         )
+
+    @staticmethod
+    def from_file(filepath: str = None, parent_filepath: str = None):
+        fullpath = full_filepath(filepath, parent_filepath)
+        raw, md_path = load_any_file(filepath, parent_filepath)
+        d = raw
+        if isinstance(d, dict):
+            return Metadata.from_dict(d, fullpath)
+
+        raise ValueError(f"Expected a dictionary with metadata, "
+                         f"but got something else in file at"
+                         f"'{fullpath}'")
 
 
 
