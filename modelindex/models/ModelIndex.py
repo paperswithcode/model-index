@@ -106,7 +106,7 @@ class ModelIndex(BaseModelIndex):
         """Check if the mandatory fields are present and if file references are valid.
 
         Args:
-            silent (bool): If to just return a list of errors without printing them out
+            silent (bool): If to return a list of errors without printing them out
 
         Returns:
             A list of errors
@@ -131,5 +131,5 @@ class ModelIndex(BaseModelIndex):
         if not silent:
             for e in errors_formatted:
                 print(e)
-
-        return errors_formatted
+        else:
+            return errors_formatted
