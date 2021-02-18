@@ -57,7 +57,7 @@ class CollectionList(BaseModelIndex):
             return CollectionList(d, fullpath)
         elif isinstance(d, dict):
             lc_keys = lowercase_keys(raw)
-            if "models" in lc_keys:
+            if "collections" in lc_keys:
                 return CollectionList(d[lc_keys["collections"]], fullpath)
 
         raise ValueError(f"Expected a list of collections, but got something else"

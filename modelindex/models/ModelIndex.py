@@ -30,7 +30,7 @@ class ModelIndex(BaseModelIndex):
         if "collections" in lc_keys:
             collections = data[lc_keys["collections"]]
             if collections is not None and isinstance(collections, str):
-                collections = ModelList.from_file(collections, filepath)
+                collections = CollectionList.from_file(collections, filepath)
             elif collections is not None and not isinstance(collections, CollectionList):
                 collections = CollectionList(collections, filepath)
 
