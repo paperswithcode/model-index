@@ -30,6 +30,10 @@ class Result(BaseModelIndex):
             if field not in self.data or self.data[field] is None:
                 self.check_errors.append(f"Field '{field}' is missing")
 
+        for field in ["Task", "Dataset"]:
+            if field in self.data and self.data[field] is not None and not isinstance(self.data[field], str):
+                self.check_errors.append(f"The '{field}' field should be a string")
+
         if "Metrics" in self.data and self.data["Metrics"]:
             m = self.data["Metrics"]
             if not isinstance(m, list) and not isinstance(m, dict):

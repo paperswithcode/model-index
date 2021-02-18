@@ -26,3 +26,11 @@ def test_results_check():
     assert len(e) == 2
     assert "dataset" in e[0].lower()
     assert "metrics" in e[1].lower()
+
+    mi = modelindex.load("tests/test-mi/09_check/mi4.yml")
+
+    e = mi.models[0].results[0].check_errors
+    assert len(e) == 3
+    assert "dataset" in e[0].lower()
+    assert "task" in e[1].lower()
+    assert "metrics" in e[2].lower()
