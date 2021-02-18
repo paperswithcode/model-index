@@ -37,3 +37,17 @@ def test_results_check():
 
     assert len(mi.models[0].metadata.check_errors) == 0
     assert len(mi.models[0].check_errors) == 0
+
+    mi = modelindex.load("tests/test-mi/09_check/mi5.yml")
+    assert len(mi.models[0].check_errors) == 1
+    assert "what" in mi.models[0].check_errors[0]
+    assert "not exist" in mi.models[0].check_errors[0]
+
+    mi = modelindex.load("tests/test-mi/09_check/mi6.yml")
+    assert len(mi.models[0].check_errors) == 1
+    assert "what" in mi.models[0].check_errors[0]
+    assert "not exist" in mi.models[0].check_errors[0]
+
+    assert len(mi.models[0].results.check_errors) == 1
+    assert "django" in mi.models[0].results.check_errors[0]
+    assert "not exist" in mi.models[0].results.check_errors[0]

@@ -24,20 +24,18 @@ class Result(BaseModelIndex):
         )
 
     def check(self, silent=True):
-        self.check_errors = []
-
         for field in ["Task", "Dataset", "Metrics"]:
             if field not in self.data or self.data[field] is None:
-                self.check_errors.append(f"Field '{field}' is missing")
+                self.check_errors.add(f"Field '{field}' is missing")
 
         for field in ["Task", "Dataset"]:
             if field in self.data and self.data[field] is not None and not isinstance(self.data[field], str):
-                self.check_errors.append(f"The '{field}' field should be a string")
+                self.check_errors.add(f"The '{field}' field should be a string")
 
         if "Metrics" in self.data and self.data["Metrics"]:
             m = self.data["Metrics"]
             if not isinstance(m, list) and not isinstance(m, dict):
-                self.check_errors.append("The 'Metrics' fields needs to be either a dict or a list")
+                self.check_errors.add("The 'Metrics' fields needs to be either a dict or a list")
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):

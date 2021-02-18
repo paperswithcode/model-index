@@ -1,3 +1,5 @@
+from ordered_set import OrderedSet
+
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.CollectionList import CollectionList
 from modelindex.models.ModelList import ModelList
@@ -10,6 +12,8 @@ class ModelIndex(BaseModelIndex):
                  filepath: str = None,
                  ):
 
+        check_errors = OrderedSet()
+
         if data is None:
             data = {}
 
@@ -21,7 +25,10 @@ class ModelIndex(BaseModelIndex):
         if "models" in lc_keys:
             models = data[lc_keys["models"]]
             if models is not None and isinstance(models, str):
-                models = ModelList.from_file(models, filepath)
+                try:
+                    models = ModelList.from_file(models, filepath)
+                except (IOError, ValueError) as e:
+                    check_errors.add(str(e))
             elif models is not None and not isinstance(models, ModelList):
                 models = ModelList(models, filepath)
 
@@ -30,7 +37,10 @@ class ModelIndex(BaseModelIndex):
         if "collections" in lc_keys:
             collections = data[lc_keys["collections"]]
             if collections is not None and isinstance(collections, str):
-                collections = CollectionList.from_file(collections, filepath)
+                try:
+                    collections = CollectionList.from_file(collections, filepath)
+                except (IOError, ValueError) as e:
+                    check_errors.add(str(e))
             elif collections is not None and not isinstance(collections, CollectionList):
                 collections = CollectionList(collections, filepath)
 
@@ -62,7 +72,8 @@ class ModelIndex(BaseModelIndex):
 
         super().__init__(
             data=d,
-            filepath=filepath
+            filepath=filepath,
+            check_errors=check_errors,
         )
 
         self.lc_keys = lowercase_keys(data)

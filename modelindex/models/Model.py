@@ -1,5 +1,7 @@
 from typing import Dict, Union, List
 
+from ordered_set import OrderedSet
+
 from modelindex.models.Metadata import Metadata
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Result import Result
@@ -22,13 +24,22 @@ class Model(BaseModelIndex):
                  _filepath: str = None,
                  **kwargs,
                  ):
+
+        check_errors = OrderedSet()
+
         if metadata is not None and isinstance(metadata, str):
-            metadata = Metadata.from_file(metadata, _filepath)
+            try:
+                metadata = Metadata.from_file(metadata, _filepath)
+            except (IOError, ValueError) as e:
+                check_errors.add(str(e))
         elif metadata is not None and not isinstance(metadata, Metadata):
             metadata = Metadata.from_dict(metadata, _filepath)
 
         if results is not None and isinstance(results, str):
-            results = ResultList.from_file(results, _filepath)
+            try:
+                results = ResultList.from_file(results, _filepath)
+            except (IOError, ValueError) as e:
+                check_errors.add(str(e))
         elif results is not None and not isinstance(results, ResultList):
             results = ResultList(results, _filepath)
 
@@ -50,14 +61,13 @@ class Model(BaseModelIndex):
 
         super().__init__(
             data=data,
-            filepath=_filepath
+            filepath=_filepath,
+            check_errors=check_errors,
         )
 
     def check(self, silent=True):
-        self.check_errors = []
-
         if self.name is None or self.name == "":
-            self.check_errors.append("Field 'Name' cannot be empty")
+            self.check_errors.add("Field 'Name' cannot be empty")
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):

@@ -1,5 +1,7 @@
 from typing import List, Union, Dict
 
+from ordered_set import OrderedSet
+
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Model import Model
 from modelindex.utils import full_filepath, load_any_file, lowercase_keys
@@ -11,6 +13,8 @@ class ModelList(BaseModelIndex):
                  _filepath: str = None,
                  ):
 
+        check_errors = OrderedSet()
+
         if models is None:
             models = []
 
@@ -20,7 +24,10 @@ class ModelList(BaseModelIndex):
         models_parsed = []
         for m in models:
             if isinstance(m, str):
-                models_parsed.append(Model.from_file(m, _filepath))
+                try:
+                    models_parsed.append(Model.from_file(m, _filepath))
+                except (IOError, ValueError) as e:
+                    check_errors.add(str(e))
             elif isinstance(m, Model):
                 models_parsed.append(m)
             else:
@@ -28,7 +35,8 @@ class ModelList(BaseModelIndex):
 
         super().__init__(
             data=models_parsed,
-            filepath=_filepath
+            filepath=_filepath,
+            check_errors=check_errors,
         )
 
     def __getitem__(self, key):

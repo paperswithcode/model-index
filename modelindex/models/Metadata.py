@@ -50,10 +50,8 @@ class Metadata(BaseModelIndex):
         )
 
     def check(self, silent=True):
-        self.check_errors = []
-
         if not isinstance(self.data, dict) and not isinstance(self.data, list):
-            self.check_errors.append("Metadata should be either a list or a dict")
+            self.check_errors.add("Metadata should be either a list or a dict")
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
@@ -80,6 +78,7 @@ class Metadata(BaseModelIndex):
     def from_file(filepath: str = None, parent_filepath: str = None):
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
+
         d = raw
         if isinstance(d, dict):
             return Metadata.from_dict(d, fullpath)
