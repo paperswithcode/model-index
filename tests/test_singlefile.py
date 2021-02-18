@@ -240,6 +240,10 @@ def test_model():
 
     assert isinstance(m.metadata, Metadata)
     assert m.metadata.data["FLOPs"] == 122
+    assert m.metadata.flops == 122
+    m.metadata.flops = 9
+    assert m.metadata.flops == 9
+
 
 def test_model_list():
     ModelList()
