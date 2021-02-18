@@ -49,6 +49,12 @@ class Metadata(BaseModelIndex):
             filepath=_filepath
         )
 
+    def check(self, silent=True):
+        self.check_errors = []
+
+        if not isinstance(self.data, dict) and not isinstance(self.data, list):
+            self.check_errors.append("Metadata should be either a list or a dict")
+
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
         lc_keys = lowercase_keys(d)

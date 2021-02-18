@@ -34,3 +34,6 @@ def test_results_check():
     assert "dataset" in e[0].lower()
     assert "task" in e[1].lower()
     assert "metrics" in e[2].lower()
+
+    assert len(mi.models[0].metadata.check_errors) == 0
+    assert len(mi.models[0].check_errors) == 0

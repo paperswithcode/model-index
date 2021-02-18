@@ -168,7 +168,8 @@ def test_model():
          'Code': 'https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442',
          'Weights': 'https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth',
          "Config": "config/myconfig.json",
-         'README': 'docs/inception-v3-readme.md'}
+         'README': 'docs/inception-v3-readme.md',
+         'Other': 'something'}
     )
 
     assert m.name == 'Inception v3'
@@ -189,6 +190,8 @@ def test_model():
                                               'Label Smoothing'],
                       'Training Resources': '8x V100 GPUs',
                       'Architecture': ['Auxiliary Classifier', 'Inception-v3 Module']}
+
+    assert m.data["Other"] == "something"
 
     assert isinstance(m.results, ResultList)
     assert m.readme == 'docs/inception-v3-readme.md'

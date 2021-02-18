@@ -20,6 +20,7 @@ class Model(BaseModelIndex):
                  readme: str = None,
                  in_collection: Union[str, List[str]] = None,
                  _filepath: str = None,
+                 **kwargs,
                  ):
         if metadata is not None and isinstance(metadata, str):
             metadata = Metadata.from_file(metadata, _filepath)
@@ -41,6 +42,7 @@ class Model(BaseModelIndex):
             "Config": config,
             "README": readme,
             "In Collection": in_collection,
+            **kwargs,
         }
 
         # Only non-empty items
@@ -50,6 +52,12 @@ class Model(BaseModelIndex):
             data=data,
             filepath=_filepath
         )
+
+    def check(self, silent=True):
+        self.check_errors = []
+
+        if self.name is None or self.name == "":
+            self.check_errors.append("Field 'Name' cannot be empty")
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
@@ -67,17 +75,17 @@ class Model(BaseModelIndex):
             "in_collection",
         ]
 
-        dd = {}
+        dd = d.copy()
         for field_name in copy_fields:
             key = field_name.lower()
             if key in lc_keys:
-                dd[field_name] = d[lc_keys[key]]
+                dd[field_name] = dd.pop(lc_keys[key])
 
-            # try with " " instead of "_" in the field name
-            if "_" in field_name:
-                key = field_name.lower().replace("_", " ")
+            # try with _ instead of space in the field name
+            if " " in field_name:
+                key = field_name.lower().replace(" ", "_")
                 if key in lc_keys:
-                    dd[field_name] = d[lc_keys[key]]
+                    dd[field_name] = dd.pop(lc_keys[key])
 
         return Model(
             _filepath=_filepath,
