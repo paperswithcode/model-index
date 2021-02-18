@@ -14,21 +14,21 @@ class ModelIndex(BaseModelIndex):
             data = {}
 
         d = {
-            "Models": ModelList(),
-            "Collections": CollectionList(),
+            "Models": ModelList(_filepath=filepath),
+            "Collections": CollectionList(_filepath=filepath),
         }
         lc_keys = lowercase_keys(data)
         if "models" in lc_keys:
             models = data[lc_keys["models"]]
             if models is not None and not isinstance(models, ModelList):
-                models = ModelList(models)
+                models = ModelList(models, filepath)
 
             d["Models"] = models
 
         if "collections" in lc_keys:
             collections = data[lc_keys["collections"]]
             if collections is not None and not isinstance(collections, CollectionList):
-                collections = CollectionList(collections)
+                collections = CollectionList(collections, filepath)
 
             d["Collections"] = collections
 

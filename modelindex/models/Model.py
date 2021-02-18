@@ -11,8 +11,8 @@ class Model(BaseModelIndex):
 
     def __init__(self,
                  name: str,
-                 metadata: Union[dict, Metadata] = None,
-                 results: Union[list, ResultList, Result] = None,
+                 metadata: Union[dict, Metadata, str] = None,
+                 results: Union[list, ResultList, Result, str] = None,
                  paper: str = None,
                  code: str = None,
                  weights: str = None,
@@ -23,10 +23,12 @@ class Model(BaseModelIndex):
                  ):
 
         if metadata is not None and not isinstance(metadata, Metadata):
-            metadata = Metadata.from_dict(metadata)
+            metadata = Metadata.from_dict(metadata, _filepath)
 
-        if results is not None and not isinstance(results, ResultList):
-            results = ResultList(results)
+        if results is not None and isinstance(results, str):
+            results = ResultList.from_file(results, _filepath)
+        elif results is not None and not isinstance(results, ResultList):
+            results = ResultList(results, _filepath)
 
         d = {
             "Name": name,

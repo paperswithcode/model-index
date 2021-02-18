@@ -1,7 +1,7 @@
 from typing import Dict
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
-from modelindex.utils import lowercase_keys
+from modelindex.utils import lowercase_keys, load_any_file, full_filepath
 
 
 class Result(BaseModelIndex):
@@ -44,6 +44,27 @@ class Result(BaseModelIndex):
             metrics=metrics,
             _filepath=_filepath,
         )
+
+    @staticmethod
+    def from_file(filepath: str = None, parent_filepath: str = None):
+        fullpath = full_filepath(filepath, parent_filepath)
+        raw, md_path = load_any_file(filepath, parent_filepath)
+        d = raw
+        if isinstance(raw, dict):
+            lc_keys = lowercase_keys(raw)
+            if "result" in lc_keys:
+                d = raw[lc_keys["result"]]
+            elif "results" in lc_keys:
+                # called Result.from_file() on a result list, fallback to ResultList
+                d = raw[lc_keys["results"]]
+                if isinstance(d, list):
+                    from modelindex.models.ResultList import ResultList
+                    return ResultList(d, fullpath)
+
+            return Result.from_dict(d, fullpath)
+        else:
+            raise ValueError(f"Expected a results dict, but got "
+                             f"something else in file '{fullpath}'")
 
     @property
     def dataset(self):

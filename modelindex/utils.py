@@ -30,6 +30,18 @@ def load_raw_from_markdown(path: str):
     return ""
 
 
+def full_filepath(path: str, cur_filepath: str = None):
+    """Return the full file path based on a possibly relative path (path)
+    and the current file path (cur_filepath)
+    """
+    if cur_filepath is not None:
+        dirname = os.path.dirname(cur_filepath)
+        if dirname:
+            path = os.path.join(dirname, path)
+
+    return path
+
+
 def load_any_file(path: str, cur_filepath: str = None):
     """Load any of the supported file formats
 
@@ -43,10 +55,7 @@ def load_any_file(path: str, cur_filepath: str = None):
             and md_path is the file to the markdown path (if loaded from markdown)
     """
 
-    if cur_filepath is not None:
-        dirname = os.path.dirname(cur_filepath)
-        if dirname:
-            path = os.path.join(dirname, path)
+    path = full_filepath(path, cur_filepath)
 
     if not os.path.exists(path):
         raise IOError(f"File {path} does not exist.")

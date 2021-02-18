@@ -15,3 +15,21 @@ def test_imports():
     assert isinstance(mi.models, ModelList)
     assert len(mi.models) == 2
 
+
+def test_result_imports():
+    mi = modelindex.load("tests/test-mi/05_field_imports")
+
+    assert "Models" in mi.data
+    assert isinstance(mi.models, ModelList)
+    assert len(mi.models) == 2
+
+    assert mi.models[0].results[0].data == {
+        'Task': 'Image Classification',
+        'Dataset': 'ImageNet',
+        'Metrics': {'Top 1 Accuracy': '74.67%', 'Top 5 Accuracy': '92.1%'}}
+
+    assert mi.models[1].results[0].data == {
+        'Task': 'Image Classification',
+        'Dataset': 'ImageNet',
+        'Metrics': {'Top 1 Accuracy': '75.1%', 'Top 5 Accuracy': '93.1%'}}
+

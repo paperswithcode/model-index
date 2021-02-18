@@ -21,7 +21,7 @@ class CollectionList(BaseModelIndex):
             if isinstance(m, Collection):
                 models_parsed.append(m)
             else:
-                models_parsed.append(Collection.from_dict(m))
+                models_parsed.append(Collection.from_dict(m, _filepath))
 
         super().__init__(
             data=models_parsed,
@@ -38,8 +38,8 @@ class CollectionList(BaseModelIndex):
     def collections(self):
         return self.data
 
-    def add(self, col: Union[Collection,Dict]):
+    def add(self, col: Union[Collection, Dict]):
         if isinstance(col, dict):
-            self.data.append(Collection.from_dict(col))
+            self.data.append(Collection.from_dict(col, self.filepath))
         elif isinstance(col, Collection):
             self.data.append(Collection)

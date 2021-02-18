@@ -1,0 +1,7 @@
+Models:
+  - Name: Inception v3 - 120 epochs
+    In Collection: Inception v3
+    Metadata:
+      Epochs: 120
+    Results: r2.yaml
+    Weights: https://download.pytorch.org/models/inception_v3_google-120-1a9a5afd.pth

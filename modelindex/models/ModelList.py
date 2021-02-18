@@ -21,7 +21,7 @@ class ModelList(BaseModelIndex):
             if isinstance(m, Model):
                 models_parsed.append(m)
             else:
-                models_parsed.append(Model.from_dict(m))
+                models_parsed.append(Model.from_dict(m, _filepath))
 
         super().__init__(
             data=models_parsed,
@@ -38,9 +38,9 @@ class ModelList(BaseModelIndex):
     def models(self):
         return self.data
 
-    def add(self, model: Union[Model,Dict]):
+    def add(self, model: Union[Model, Dict]):
         if isinstance(model, dict):
-            self.data.append(Model.from_dict(model))
+            self.data.append(Model.from_dict(model, self.filepath))
         elif isinstance(model, Model):
             self.data.append(model)
 
