@@ -3,7 +3,7 @@ from ordered_set import OrderedSet
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.CollectionList import CollectionList
 from modelindex.models.ModelList import ModelList
-from modelindex.utils import lowercase_keys, load_any_file, full_filepath
+from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_any_files_wildcard
 
 
 class ModelIndex(BaseModelIndex):
@@ -55,15 +55,15 @@ class ModelIndex(BaseModelIndex):
             for import_file in imp:
                 try:
                     fullpath = full_filepath(import_file, filepath)
-                    raw, md_name = load_any_file(import_file, filepath)
+                    all_loaded = load_any_files_wildcard(import_file, filepath)
+                    for raw, md_name in all_loaded:
+                        mi = ModelIndex.from_dict(raw, fullpath)
+                        if mi.models:
+                            for model in mi.models:
+                                d["Models"].add(model)
 
-                    mi = ModelIndex.from_dict(raw, fullpath)
-                    if mi.models:
-                        for model in mi.models:
-                            d["Models"].add(model)
-
-                        for col in mi.collections:
-                            d["Collections"].add(col)
+                            for col in mi.collections:
+                                d["Collections"].add(col)
                 except (IOError, ValueError) as e:
                     check_errors.add(str(e))
 

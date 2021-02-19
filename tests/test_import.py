@@ -6,6 +6,7 @@ from modelindex.models.Model import Model
 from modelindex.models.ModelList import ModelList
 from modelindex.models.Result import Result
 from modelindex.models.ResultList import ResultList
+from modelindex.utils import expand_wildcard_path
 
 
 def test_imports():
@@ -81,3 +82,28 @@ def test_models_imports_json():
     assert mi.models[1].metadata.data == {
         "Epochs": 111,
     }
+
+
+def test_expand_wildcard_path():
+    supported = expand_wildcard_path("tests/test-mi/12_wildcard_imports/*.yml")
+    assert supported == ["tests/test-mi/12_wildcard_imports/model-index.yml"]
+
+    supported = expand_wildcard_path("tests/test-mi/12_wildcard_imports/model-index.yml")
+    assert supported == ["tests/test-mi/12_wildcard_imports/model-index.yml"]
+
+    supported = expand_wildcard_path("tests/test-mi/12_wildcard_imports/abbccabbbcc")
+    assert supported == ["tests/test-mi/12_wildcard_imports/abbccabbbcc"]
+
+    supported = expand_wildcard_path("tests/test-mi/12_wildcard_imports")
+    assert supported == ["tests/test-mi/12_wildcard_imports"]
+
+    supported = expand_wildcard_path("tests/test-mi/12_wildcard_imports/models/*.yml")
+    assert supported == ["tests/test-mi/12_wildcard_imports/models/m1.yml",
+                         "tests/test-mi/12_wildcard_imports/models/m2.yml"]
+
+
+def test_wildcard_import():
+    mi = modelindex.load("tests/test-mi/12_wildcard_imports")
+
+    assert len(mi.models) == 2
+

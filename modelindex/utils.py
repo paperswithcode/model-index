@@ -2,6 +2,7 @@ import os
 import yaml
 import json
 import markdown
+import glob
 from html.parser import HTMLParser
 
 
@@ -87,12 +88,45 @@ def full_filepath(path: str, cur_filepath: str = None):
     return path
 
 
+def expand_wildcard_path(path: str):
+    if "*" not in path and "?" not in path:
+        return [path]
+    else:
+        return sorted(glob.glob(path))
+
+
+def load_any_files_wildcard(path: str, cur_filepath: str = None):
+    """Load any supported file format, supporting wildcard matches as well.
+
+    Args:
+        path (str): Path to files (including any wildcards)
+        cur_filepath (str): The path to the current file from which we
+                            are loading the new file
+                            (important for relative paths)
+
+    """
+
+    out = []
+    # to do globs we need the absolute path
+    fullpath = full_filepath(path, cur_filepath)
+    for filepath in expand_wildcard_path(fullpath):
+        # load_any_file() expects relative paths, so covert back
+        if cur_filepath:
+            rel_path = os.path.relpath(filepath, os.path.dirname(cur_filepath))
+        else:
+            rel_path = filepath
+        out.append(load_any_file(rel_path, cur_filepath))
+
+    return out
+
+
 def load_any_file(path: str, cur_filepath: str = None):
     """Load any of the supported file formats
 
         Args:
             path (str): Path to the file to load
-            cur_filepath (str): The path to the current file from which we are are loading the new file
+            cur_filepath (str): The path to the current file from which we
+                                are loading the new file
                                 (important for relative paths)
 
         Returns:
