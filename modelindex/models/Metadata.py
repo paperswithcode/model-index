@@ -1,7 +1,7 @@
 from typing import Union, Dict
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
-from modelindex.utils import lowercase_keys, full_filepath, load_any_file
+from modelindex.utils import lowercase_keys, full_filepath, load_any_file, merge_dicts
 
 
 class Metadata(BaseModelIndex):
@@ -55,6 +55,10 @@ class Metadata(BaseModelIndex):
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
+        # be flexible to a common error where
+        if isinstance(d, list) and len(d) > 0:
+            d = merge_dicts(d)
+
         lc_keys = lowercase_keys(d)
 
         dd = d.copy()

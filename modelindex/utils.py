@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, Dict
 
 import yaml
 import json
@@ -175,3 +175,17 @@ def merge_lists_data(list_objs: List):
         return objs1
     else:
         return list_objs
+
+
+def merge_dicts(dict_list: List[Dict]):
+    if dict_list:
+        if len(dict_list) == 1:
+            return dict_list[0]
+        else:
+            # merge dictionaries
+            out = {}
+            for d in dict_list:
+                out.update(d)
+            return out
+    else:
+        return None

@@ -316,3 +316,11 @@ def test_collections_load():
     assert isinstance(mi.models, ModelList)
 
     assert isinstance(mi.collections, CollectionList)
+
+
+def test_common_dict_list_errors():
+    mi = modelindex.load("tests/test-mi/14_common")
+
+    assert mi.models[1].metadata.epochs == 130
+    assert mi.models[0].results[0].task == "Image Classification"
+    assert mi.models[0].results[0].metrics["Top 1 Accuracy"] == "11.67%"
