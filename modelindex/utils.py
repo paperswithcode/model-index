@@ -88,11 +88,20 @@ def full_filepath(path: str, cur_filepath: str = None):
     return path
 
 
-def expand_wildcard_path(path: str):
+def expand_wildcard_path(path: str, cur_filepath: str = None):
     if "*" not in path and "?" not in path:
         return [path]
     else:
-        return sorted(glob.glob(path))
+        # we need absolute paths for glob
+        path = full_filepath(path, cur_filepath)
+        fullpaths = glob.glob(path)
+
+        # but we'll return relative paths so convert back
+        if cur_filepath is not None:
+            base_path = os.path.dirname(cur_filepath)
+            return sorted([os.path.relpath(fp, base_path) for fp in fullpaths])
+        else:
+            return sorted(fullpaths)
 
 
 def load_any_files_wildcard(path: str, cur_filepath: str = None):
@@ -108,14 +117,8 @@ def load_any_files_wildcard(path: str, cur_filepath: str = None):
 
     out = []
     # to do globs we need the absolute path
-    fullpath = full_filepath(path, cur_filepath)
-    for filepath in expand_wildcard_path(fullpath):
-        # load_any_file() expects relative paths, so covert back
-        if cur_filepath:
-            rel_path = os.path.relpath(filepath, os.path.dirname(cur_filepath))
-        else:
-            rel_path = filepath
-        out.append(load_any_file(rel_path, cur_filepath))
+    for filepath in expand_wildcard_path(path, cur_filepath):
+        out.append(load_any_file(filepath, cur_filepath))
 
     return out
 
