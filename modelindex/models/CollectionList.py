@@ -4,7 +4,7 @@ from ordered_set import OrderedSet
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Collection import Collection
-from modelindex.utils import full_filepath, load_any_file, lowercase_keys
+from modelindex.utils import full_filepath, load_any_file, lowercase_keys, expand_wildcard_path
 
 
 class CollectionList(BaseModelIndex):
@@ -23,14 +23,16 @@ class CollectionList(BaseModelIndex):
         check_errors = OrderedSet()
         for m in models:
             if isinstance(m, str):
-                try:
-                    model = Collection.from_file(m, _filepath)
-                    if isinstance(model, Collection):
-                        models_parsed.append(model)
-                    elif isinstance(model, CollectionList):
-                        models_parsed.extend(model)
-                except (IOError, ValueError) as e:
-                    check_errors.add(str(e))
+                # link to collection file, support wildcards
+                for model_file in expand_wildcard_path(m, _filepath):
+                    try:
+                        model = Collection.from_file(model_file, _filepath)
+                        if isinstance(model, Collection):
+                            models_parsed.append(model)
+                        elif isinstance(model, CollectionList):
+                            models_parsed.extend(model)
+                    except (IOError, ValueError) as e:
+                        check_errors.add(str(e))
             elif isinstance(m, Collection):
                 models_parsed.append(m)
             else:

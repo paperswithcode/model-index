@@ -4,7 +4,7 @@ from ordered_set import OrderedSet
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Model import Model
-from modelindex.utils import full_filepath, load_any_file, lowercase_keys
+from modelindex.utils import full_filepath, load_any_file, lowercase_keys, expand_wildcard_path
 
 
 class ModelList(BaseModelIndex):
@@ -24,17 +24,21 @@ class ModelList(BaseModelIndex):
         models_parsed = []
         for m in models:
             if isinstance(m, str):
-                try:
-                    model = Model.from_file(m, _filepath)
-                    if isinstance(model, Model):
-                        models_parsed.append(model)
-                    elif isinstance(model, ModelList):
-                        models_parsed.extend(model)
-                except (IOError, ValueError) as e:
-                    check_errors.add(str(e))
+                # link to model file - support wildcards
+                for model_file in expand_wildcard_path(m, _filepath):
+                    try:
+                        model = Model.from_file(model_file, _filepath)
+                        if isinstance(model, Model):
+                            models_parsed.append(model)
+                        elif isinstance(model, ModelList):
+                            models_parsed.extend(model)
+                    except (IOError, ValueError) as e:
+                        check_errors.add(str(e))
             elif isinstance(m, Model):
+                # model object
                 models_parsed.append(m)
             else:
+                # dict
                 models_parsed.append(Model.from_dict(m, _filepath))
 
         super().__init__(

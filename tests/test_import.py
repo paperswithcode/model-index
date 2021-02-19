@@ -113,7 +113,18 @@ def test_wildcard_model_import():
     assert len(mi.models) == 2
     assert len(mi.collections) == 1
 
-
     mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi2.yml")
+    assert len(mi.models) == 0
+    assert len(mi.collections) == 2
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi3.yml")
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 1
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi4.yml")
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 1
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi5.yml")
     assert len(mi.models) == 0
     assert len(mi.collections) == 2
