@@ -16,7 +16,13 @@ def load(path: str = "model-index.yml"):
     """
 
     if os.path.isdir(path):
-        path = os.path.join(path, MODEL_INDEX_ROOT_FILE)
+        new_path = os.path.join(path, MODEL_INDEX_ROOT_FILE)
+        # if model-index.yml doesn't exist try model-index.yaml
+        if not os.path.exists(new_path):
+            yaml_ext = os.path.join(path, "model-index.yaml")
+            if os.path.exists(yaml_ext):
+                new_path = yaml_ext
+        path = new_path
 
     raw, md_path = load_any_file(path)
 

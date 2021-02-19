@@ -1,0 +1,4 @@
+- Task: Semantic Segmentation
+  Dataset: COCO
+  Metrics:
+    mAP: 19%

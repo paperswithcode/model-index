@@ -45,6 +45,17 @@ class ResultList(BaseModelIndex):
     def __setitem__(self, key, value):
         self.data[key] = value
 
+    def __iter__(self):
+        self._iterator_inx = 0
+        return self
+
+    def __next__(self):
+        if self._iterator_inx < len(self.data):
+            self._iterator_inx += 1
+            return self.data[self._iterator_inx - 1]
+        else:
+            raise StopIteration
+
     def __len__(self):
         return len(self.data)
 

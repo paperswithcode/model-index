@@ -57,20 +57,13 @@ class ModelIndex(BaseModelIndex):
                     fullpath = full_filepath(import_file, filepath)
                     raw, md_name = load_any_file(import_file, filepath)
 
-                    raw_lc_keys = lowercase_keys(raw)
-                    if "models" in raw_lc_keys:
-                        additional_models = raw[raw_lc_keys["models"]]
-                        if not isinstance(additional_models, list):
-                            additional_models = list(additional_models)
-                        for model in additional_models:
-                            d["Models"].add(model, fullpath)
+                    mi = ModelIndex.from_dict(raw, fullpath)
+                    if mi.models:
+                        for model in mi.models:
+                            d["Models"].add(model)
 
-                    if "collections" in raw_lc_keys:
-                        additional_cols = raw[raw_lc_keys["collections"]]
-                        if not isinstance(additional_cols, list):
-                            additional_cols = list(additional_cols)
-                        for col in additional_cols:
-                            d["Collections"].add(col, fullpath)
+                        for col in mi.collections:
+                            d["Collections"].add(col)
                 except (IOError, ValueError) as e:
                     check_errors.add(str(e))
 

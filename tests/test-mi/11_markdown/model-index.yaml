@@ -1,0 +1,6 @@
+Models:
+  - rexnet.md
+  - rexnet2.md
+  - subdir/rexnet3.md
+Import:
+  - secondary.yaml

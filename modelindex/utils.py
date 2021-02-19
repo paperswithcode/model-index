@@ -2,6 +2,16 @@ import os
 import yaml
 import json
 import markdown
+from html.parser import HTMLParser
+
+
+class CommentHTMLParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.extracted_comments = []
+
+    def handle_comment(self, data):
+        self.extracted_comments.append(data)
 
 
 def lowercase_keys(d: dict):
@@ -25,9 +35,44 @@ def load_raw_from_markdown(path: str):
     with open(path, "r") as f:
         md = markdown.markdown(f.read())
 
-    # TODO
+    parser = CommentHTMLParser()
+    parser.feed(str(md))
+    comments = parser.extracted_comments
 
-    return ""
+    # try to interpret as a yaml file
+    metadata = []
+    for comment in comments:
+        try:
+            parsed = yaml.load(comment, Loader=yaml.SafeLoader)
+            if isinstance(parsed, dict):
+                lc_keys = lowercase_keys(parsed)
+                if "type" in lc_keys and (
+                        parsed[lc_keys["type"]].lower() == "model-index"
+                        or
+                        parsed[lc_keys["type"]].lower() == "modelindex"
+                ):
+                    metadata.append(parsed)
+        except Exception:
+            pass
+
+    # if there are many metadata entries, merge them
+    meta_dict = {}
+    for m in metadata:
+        for key, value in m.items():
+            if key not in meta_dict:
+                meta_dict[key] = value
+            else:
+                cur = meta_dict[key]
+                if not isinstance(cur, list):
+                    cur = [cur]
+                if isinstance(value, list):
+                    cur.extend(value)
+                else:
+                    cur.append(value)
+
+                meta_dict[key] = cur
+
+    return meta_dict
 
 
 def full_filepath(path: str, cur_filepath: str = None):
@@ -55,6 +100,7 @@ def load_any_file(path: str, cur_filepath: str = None):
             and md_path is the file to the markdown path (if loaded from markdown)
     """
 
+    relative_path = path
     path = full_filepath(path, cur_filepath)
 
     if not os.path.exists(path):
@@ -68,7 +114,7 @@ def load_any_file(path: str, cur_filepath: str = None):
         with open(path, "r") as f:
             raw = json.load(f)
     elif path.endswith(".md"):
-        md_path = path
+        md_path = relative_path
         raw = load_raw_from_markdown(path)
     else:
         raise ValueError(f"File type at path '{path}' not recognized. We support YAML (.yml or .yaml), "

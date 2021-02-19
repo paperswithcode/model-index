@@ -14,6 +14,7 @@ class BaseModelIndex:
         self.filepath = filepath
         self.data = data
         self.check_errors = OrderedSet(check_errors)
+        self._iterator_inx = 0
 
         # always call checking
         self._check(silent=True)

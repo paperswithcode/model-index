@@ -25,7 +25,11 @@ class ModelList(BaseModelIndex):
         for m in models:
             if isinstance(m, str):
                 try:
-                    models_parsed.append(Model.from_file(m, _filepath))
+                    model = Model.from_file(m, _filepath)
+                    if isinstance(model, Model):
+                        models_parsed.append(model)
+                    elif isinstance(model, ModelList):
+                        models_parsed.extend(model)
                 except (IOError, ValueError) as e:
                     check_errors.add(str(e))
             elif isinstance(m, Model):
@@ -44,6 +48,20 @@ class ModelList(BaseModelIndex):
 
     def __setitem__(self, key, value):
         self.data[key] = value
+
+    def __iter__(self):
+        self._iterator_inx = 0
+        return self
+
+    def __next__(self):
+        if self._iterator_inx < len(self.data):
+            self._iterator_inx += 1
+            return self.data[self._iterator_inx - 1]
+        else:
+            raise StopIteration
+
+    def __len__(self):
+        return len(self.data)
 
     @property
     def models(self):

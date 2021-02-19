@@ -24,7 +24,11 @@ class CollectionList(BaseModelIndex):
         for m in models:
             if isinstance(m, str):
                 try:
-                    models_parsed.append(Collection.from_file(m, _filepath))
+                    model = Collection.from_file(m, _filepath)
+                    if isinstance(model, Collection):
+                        models_parsed.append(model)
+                    elif isinstance(model, CollectionList):
+                        models_parsed.extend(model)
                 except (IOError, ValueError) as e:
                     check_errors.add(str(e))
             elif isinstance(m, Collection):
@@ -44,15 +48,30 @@ class CollectionList(BaseModelIndex):
     def __setitem__(self, key, value):
         self.data[key] = value
 
+    def __iter__(self):
+        self._iterator_inx = 0
+        return self
+
+    def __next__(self):
+        if self._iterator_inx < len(self.data):
+            self._iterator_inx += 1
+            return self.data[self._iterator_inx - 1]
+        else:
+            raise StopIteration
+
+    def __len__(self):
+        return len(self.data)
+
     @property
     def collections(self):
         return self.data
 
-    def add(self, col: Union[Collection, Dict]):
+    def add(self, col: Union[Collection, Dict], _filepath: str = None):
+        col_filepath = _filepath if _filepath is not None else self.filepath
         if isinstance(col, dict):
-            self.data.append(Collection.from_dict(col, self.filepath))
+            self.data.append(Collection.from_dict(col, col_filepath))
         elif isinstance(col, Collection):
-            self.data.append(Collection)
+            self.data.append(col)
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):

@@ -70,7 +70,7 @@ class Model(BaseModelIndex):
             self.check_errors.add("Field 'Name' cannot be empty")
 
     @staticmethod
-    def from_dict(d: Dict, _filepath: str = None):
+    def from_dict(d: Dict, _filepath: str = None, _path_to_readme: str = None):
         lc_keys = lowercase_keys(d)
 
         copy_fields = [
@@ -97,6 +97,9 @@ class Model(BaseModelIndex):
                 if key in lc_keys:
                     dd[field_name] = dd.pop(lc_keys[key])
 
+        if _path_to_readme:
+            dd["README"] = _path_to_readme
+
         return Model(
             _filepath=_filepath,
             **dd,
@@ -118,7 +121,7 @@ class Model(BaseModelIndex):
                     from modelindex.models.ModelList import ModelList
                     return ModelList(d, fullpath)
 
-            return Model.from_dict(d, fullpath)
+            return Model.from_dict(d, fullpath, md_path)
         else:
             raise ValueError(f"Expected a model dict, but got "
                              f"something else in file '{fullpath}'")
