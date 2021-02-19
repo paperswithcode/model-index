@@ -6,7 +6,7 @@ from modelindex.models.Metadata import Metadata
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.Result import Result
 from modelindex.models.ResultList import ResultList
-from modelindex.utils import lowercase_keys, full_filepath, load_any_file
+from modelindex.utils import lowercase_keys, full_filepath, load_any_file, expand_wildcard_path, merge_lists_data
 
 
 class Model(BaseModelIndex):
@@ -28,6 +28,7 @@ class Model(BaseModelIndex):
         check_errors = OrderedSet()
 
         if metadata is not None and isinstance(metadata, str):
+            # link to a metadata file
             try:
                 metadata = Metadata.from_file(metadata, _filepath)
             except (IOError, ValueError) as e:
@@ -36,10 +37,14 @@ class Model(BaseModelIndex):
             metadata = Metadata.from_dict(metadata, _filepath)
 
         if results is not None and isinstance(results, str):
-            try:
-                results = ResultList.from_file(results, _filepath)
-            except (IOError, ValueError) as e:
-                check_errors.add(str(e))
+            # link to 1+ result files
+            results_list = []
+            for results_file in expand_wildcard_path(results, _filepath):
+                try:
+                    results_list.append(ResultList.from_file(results_file, _filepath))
+                except (IOError, ValueError) as e:
+                    check_errors.add(str(e))
+            results = merge_lists_data(results_list)
         elif results is not None and not isinstance(results, ResultList):
             results = ResultList(results, _filepath)
 

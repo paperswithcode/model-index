@@ -128,3 +128,16 @@ def test_wildcard_model_import():
     mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi5.yml")
     assert len(mi.models) == 0
     assert len(mi.collections) == 2
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi6.yml")
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 1
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi7.yml")
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 1
+    assert mi.models[0].name == "Inception v3 - 90 epochs"
+    assert len(mi.models[0].results) == 2
+    assert mi.models[0].results[0].metrics["Top 1 Accuracy"] == "11%"
+    assert mi.models[0].results[1].metrics["Top 1 Accuracy"] == "21%"
+

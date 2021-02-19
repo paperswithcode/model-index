@@ -1,4 +1,6 @@
 import os
+from typing import List
+
 import yaml
 import json
 import markdown
@@ -158,3 +160,18 @@ def load_any_file(path: str, cur_filepath: str = None):
                          f"JSON (.json) and markdown (.md) files.")
 
     return raw, md_path
+
+
+def merge_lists_data(list_objs: List):
+    """Take multiple e.g. ResultList objects and merge them together into one
+       by concatenating the data lists.
+    """
+    if list_objs:
+        objs1 = list_objs[0]
+        # Merge data from all files
+        if len(list_objs) > 1:
+            for i in range(1, len(list_objs)):
+                objs1.data.extend(list_objs[i].data)
+        return objs1
+    else:
+        return list_objs

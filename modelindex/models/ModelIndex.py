@@ -3,7 +3,8 @@ from ordered_set import OrderedSet
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.CollectionList import CollectionList
 from modelindex.models.ModelList import ModelList
-from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_any_files_wildcard, expand_wildcard_path
+from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_any_files_wildcard, \
+    expand_wildcard_path, merge_lists_data
 
 
 class ModelIndex(BaseModelIndex):
@@ -32,13 +33,7 @@ class ModelIndex(BaseModelIndex):
                         models_list.append(ModelList.from_file(model_file, filepath))
                     except (IOError, ValueError) as e:
                         check_errors.add(str(e))
-                if models_list:
-                    models1 = models_list[0]
-                    # Merge data from all files
-                    if len(models_list) > 1:
-                        for i in range(1, len(models_list)):
-                            models1.data.extend(models_list[i])
-                    models = models1
+                models = merge_lists_data(models_list)
             # Syntax: Models: list[ model dict ]
             elif models is not None and not isinstance(models, ModelList):
                 models = ModelList(models, filepath)
@@ -55,13 +50,7 @@ class ModelIndex(BaseModelIndex):
                         collections_list.append(ModelList.from_file(model_file, filepath))
                     except (IOError, ValueError) as e:
                         check_errors.add(str(e))
-                if collections_list:
-                    collections1 = collections_list[0]
-                    # Merge data from all files
-                    if len(collections_list) > 1:
-                        for i in range(1, len(collections_list)):
-                            collections1.data.extend(collections_list[i])
-                    collections = collections1
+                collections = merge_lists_data(collections_list)
             # Syntax: Collections: list[ model dict ]
             elif collections is not None and not isinstance(collections, CollectionList):
                 collections = CollectionList(collections, filepath)
