@@ -22,4 +22,8 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=open("requirements.txt").read().splitlines(),
+    entry_points="""
+        [console_scripts]
+        mi=modelindex.__main__:cli
+    """,
 )

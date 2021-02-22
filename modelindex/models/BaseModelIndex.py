@@ -1,3 +1,5 @@
+import os
+
 from typing import List, Union, Dict, Set
 from ordered_set import OrderedSet
 
@@ -73,7 +75,7 @@ class BaseModelIndex:
             silent (bool): If to return a list of errors without printing them out
 
         Returns:
-            A list of errors
+            If silent: list of errors
 
         """
         errors = self.collect_check_errors()
@@ -84,9 +86,14 @@ class BaseModelIndex:
         errors_formatted = []
         for e in errors:
             for msg in e["errors"]:
+                fp = e["filepath"]
+                if self.filepath:
+                    # generate relative paths if possible
+                    fp = os.path.relpath(fp, os.path.dirname(self.filepath))
+
                 errors_formatted.append(
                     "%s: %s: %s" % (
-                        e["filepath"],
+                        fp,
                         e["type"],
                         msg
                     )
@@ -95,6 +102,9 @@ class BaseModelIndex:
         if not silent:
             for e in errors_formatted:
                 print(e)
+            # Return false if there are errors
+            if not errors_formatted:
+                print("All good!")
         else:
             return errors_formatted
 
