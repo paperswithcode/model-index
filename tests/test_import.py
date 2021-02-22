@@ -55,9 +55,11 @@ def test_metadata_imports():
 def test_models_imports():
     mi = modelindex.load("tests/test-mi/07_import_models")
 
+    print(mi)
     assert "Models" in mi.data
     assert isinstance(mi.models, ModelList)
     assert len(mi.models) == 2
+    assert len(mi.collections) == 1
 
     assert mi.models[0].metadata.data == {
         "Epochs": 90
@@ -114,8 +116,8 @@ def test_wildcard_model_import():
     assert len(mi.collections) == 1
 
     mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi2.yml")
-    assert len(mi.models) == 0
-    assert len(mi.collections) == 2
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 0
 
     mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi3.yml")
     assert len(mi.models) == 2

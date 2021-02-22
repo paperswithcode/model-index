@@ -8,6 +8,11 @@ from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_
 
 
 class ModelIndex(BaseModelIndex):
+    COMMON_FIELDS = [
+        "Models",
+        "Collections",
+    ]
+
     def __init__(self,
                  data: dict = None,
                  filepath: str = None,
@@ -47,7 +52,7 @@ class ModelIndex(BaseModelIndex):
                 collections_list = []
                 for model_file in expand_wildcard_path(collections, filepath):
                     try:
-                        collections_list.append(ModelList.from_file(model_file, filepath))
+                        collections_list.append(CollectionList.from_file(model_file, filepath))
                     except (IOError, ValueError) as e:
                         check_errors.add(str(e))
                 collections = merge_lists_data(collections_list)

@@ -92,8 +92,8 @@ class Model(BaseModelIndex):
             if not os.path.isfile(fullpath):
                 self.check_errors.add(f"Path to README file {self.readme} is not a valid file.")
 
-    @staticmethod
-    def from_dict(d: Dict, _filepath: str = None, _path_to_readme: str = None):
+    @classmethod
+    def from_dict(cls, d: Dict, _filepath: str = None, _path_to_readme: str = None):
         lc_keys = lowercase_keys(d)
 
         copy_fields = [
@@ -123,7 +123,7 @@ class Model(BaseModelIndex):
         if _path_to_readme:
             dd["README"] = _path_to_readme
 
-        return Model(
+        return cls(
             _filepath=_filepath,
             **dd,
         )
