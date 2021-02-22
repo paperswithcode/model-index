@@ -96,3 +96,9 @@ def test_any_file():
 
     assert isinstance(mi, ModelIndex)
     assert mi.models[0].name == "RexNet3"
+
+    rl = modelindex.load("tests/test-mi/09_check/results_list.yaml")
+
+    assert isinstance(rl, ResultList)
+    assert len(rl) == 2
+    assert rl[1].metrics["Top 1 Accuracy"] == "70.67%"
