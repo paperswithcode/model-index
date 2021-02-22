@@ -1,4 +1,5 @@
 import modelindex
+import pytest
 from modelindex import Metadata
 from modelindex.models.Collection import Collection
 from modelindex.models.CollectionList import CollectionList
@@ -104,3 +105,6 @@ def test_any_file():
     assert rl[1].metrics["Top 1 Accuracy"] == "70.67%"
     assert len(rl[2].check_errors) == 1
     assert "Metrics" in rl[2].check_errors[0]
+
+    with pytest.raises(ValueError):
+        modelindex.load("tests/test-mi/09_check/invalid_file.yml")
