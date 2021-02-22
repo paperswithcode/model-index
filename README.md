@@ -193,7 +193,8 @@ index, or an individual file:
 
 via the CLI:
 ```shell script
-mi check
+mi check  # Check the entire index
+mi check models/metadata/inception_v3.json    # check one file
 ```
 
 or programatically:
@@ -201,7 +202,12 @@ or programatically:
 ```python
 import modelindex
 
+# check entire index
 mi = modelindex.load("<path to model-index.yml>")
+mi.check()
+
+# check one file
+mi = modelindex.load("models/metadata/inception_v3.json")
 mi.check()
 ```
 

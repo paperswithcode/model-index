@@ -62,3 +62,35 @@ class BaseModelIndex:
                         collected.extend(obj.collect_check_errors(name))
 
         return collected
+
+    def check(self, silent=False):
+        """Check if the mandatory fields are present and if file references are valid.
+
+        Args:
+            silent (bool): If to return a list of errors without printing them out
+
+        Returns:
+            A list of errors
+
+        """
+        errors = self.collect_check_errors()
+
+        # only keep non-empty
+        errors = [e for e in errors if e["errors"]]
+
+        errors_formatted = []
+        for e in errors:
+            for msg in e["errors"]:
+                errors_formatted.append(
+                    "%s: %s: %s" % (
+                        e["filepath"],
+                        e["type"],
+                        msg
+                    )
+                )
+
+        if not silent:
+            for e in errors_formatted:
+                print(e)
+        else:
+            return errors_formatted

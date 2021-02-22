@@ -6,6 +6,7 @@ from modelindex.models.Model import Model
 from modelindex.models.ModelList import ModelList
 from modelindex.models.Result import Result
 from modelindex.models.ResultList import ResultList
+from modelindex.models.ModelIndex import ModelIndex
 
 
 def test_results_check():
@@ -76,3 +77,22 @@ def test_results_check():
     assert len(mi.models[0].check_errors) == 1
     assert "what" in mi.models[0].check_errors[0]
     assert "not exist" in mi.models[0].check_errors[0]
+
+
+def test_any_file():
+    m1 = modelindex.load("tests/test-mi/07_import_models/model1.yaml")
+
+    assert isinstance(m1, Model)
+    assert m1.metadata.epochs == 90
+    assert len(m1.results) == 1
+
+    m2 = modelindex.load("tests/test-mi/07_import_models/model2.yaml")
+
+    assert isinstance(m2, Model)
+    assert m2.metadata.epochs == 120
+    assert len(m2.results) == 1
+
+    mi = modelindex.load("tests/test-mi/11_markdown/subdir/rexnet3.md")
+
+    assert isinstance(mi, ModelIndex)
+    assert mi.models[0].name == "RexNet3"
