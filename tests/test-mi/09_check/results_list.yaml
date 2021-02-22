@@ -8,3 +8,5 @@
   Metrics:
     Top 1 Accuracy: 70.67%
     Top 5 Accuracy: 90.1%
+- Task: Image Classification
+  Dataset: Something else

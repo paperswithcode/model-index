@@ -100,5 +100,7 @@ def test_any_file():
     rl = modelindex.load("tests/test-mi/09_check/results_list.yaml")
 
     assert isinstance(rl, ResultList)
-    assert len(rl) == 2
+    assert len(rl) == 3
     assert rl[1].metrics["Top 1 Accuracy"] == "70.67%"
+    assert len(rl[2].check_errors) == 1
+    assert "Metrics" in rl[2].check_errors[0]
