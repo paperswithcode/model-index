@@ -94,35 +94,35 @@ class Metadata(BaseModelIndex):
     # Getters
     @property
     def flops(self):
-        return self.data["FLOPs"]
+        return self.data.get("FLOPs", None)
 
     @property
     def parameters(self):
-        return self.data["Parameters"]
+        return self.data.get("Parameters", None)
 
     @property
     def epochs(self):
-        return self.data["Epochs"]
+        return self.data.get("Epochs", None)
 
     @property
     def batch_size(self):
-        return self.data["Batch Size"]
+        return self.data.get("Batch Size", None)
 
     @property
     def training_data(self):
-        return self.data["Training Data"]
+        return self.data.get("Training Data", None)
 
     @property
     def training_techniques(self):
-        return self.data["Training Techniques"]
+        return self.data.get("Training Techniques", None)
 
     @property
     def training_resources(self):
-        return self.data["Training Resources"]
+        return self.data.get("Training Resources", None)
 
     @property
     def architecture(self):
-        return self.data["Architecture"]
+        return self.data.get("Architecture", None)
 
     # Setters
     @flops.setter

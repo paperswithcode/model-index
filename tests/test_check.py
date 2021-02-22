@@ -51,9 +51,10 @@ def test_results_check():
     assert len(msgs) == 4
 
     mi = modelindex.load("tests/test-mi/09_check/mi6.yml")
-    assert len(mi.models[0].check_errors) == 1
+    assert len(mi.models[0].check_errors) == 2
     assert "what" in mi.models[0].check_errors[0]
     assert "not exist" in mi.models[0].check_errors[0]
+    assert "README" in mi.models[0].check_errors[1]
 
     assert len(mi.models[0].results.check_errors) == 1
     assert "django" in mi.models[0].results.check_errors[0]
@@ -70,3 +71,8 @@ def test_results_check():
 
     assert "noexist.json" in msgs[0]
     assert "wrongsubdir" in msgs[1]
+
+    mi = modelindex.load("tests/test-mi/09_check/mi8.yml")
+    assert len(mi.models[0].check_errors) == 1
+    assert "what" in mi.models[0].check_errors[0]
+    assert "not exist" in mi.models[0].check_errors[0]

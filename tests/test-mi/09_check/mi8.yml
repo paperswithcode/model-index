@@ -6,4 +6,4 @@ Models:
     Paper: https://arxiv.org/abs/1512.00567v3
     Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
     Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth
-    README: docs/inception-v3-readme-invalid.md
+    README: This is just somre README text here.

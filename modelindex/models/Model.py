@@ -1,3 +1,4 @@
+import os
 from typing import Dict, Union, List
 
 from ordered_set import OrderedSet
@@ -74,6 +75,12 @@ class Model(BaseModelIndex):
         if self.name is None or self.name == "":
             self.check_errors.add("Field 'Name' cannot be empty")
 
+        if self.readme and self.readme.endswith(".md") and len(self.readme) < 256:
+            # check if the README exists
+            fullpath = full_filepath(self.readme, self.filepath)
+            if not os.path.isfile(fullpath):
+                self.check_errors.add(f"Path to README file {self.readme} is not a valid file.")
+
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None, _path_to_readme: str = None):
         lc_keys = lowercase_keys(d)
@@ -135,39 +142,39 @@ class Model(BaseModelIndex):
     # Getters
     @property
     def name(self):
-        return self.data["Name"]
+        return self.data.get("Name", None)
 
     @property
     def paper(self):
-        return self.data["Paper"]
+        return self.data.get("Paper", None)
 
     @property
     def code(self):
-        return self.data["Code"]
+        return self.data.get("Code", None)
 
     @property
     def weights(self):
-        return self.data["Weights"]
+        return self.data.get("Weights", None)
 
     @property
     def config(self):
-        return self.data["Config"]
+        return self.data.get("Config", None)
 
     @property
     def readme(self):
-        return self.data["README"]
+        return self.data.get("README", None)
 
     @property
     def metadata(self):
-        return self.data["Metadata"]
+        return self.data.get("Metadata", None)
 
     @property
     def results(self):
-        return self.data["Results"]
+        return self.data.get("Results", None)
 
     @property
     def in_collection(self):
-        return self.data["In Collection"]
+        return self.data.get("In Collection", None)
 
     # Setters
     @name.setter

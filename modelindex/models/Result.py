@@ -83,15 +83,15 @@ class Result(BaseModelIndex):
 
     @property
     def dataset(self):
-        return self.data["Dataset"]
+        return self.data.get("Dataset", None)
 
     @property
     def task(self):
-        return self.data["Task"]
+        return self.data.get("Task", None)
 
     @property
     def metrics(self):
-        return self.data["Metrics"]
+        return self.data.get("Metrics", None)
 
     # Setters
     @dataset.setter
