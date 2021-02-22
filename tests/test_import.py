@@ -55,7 +55,6 @@ def test_metadata_imports():
 def test_models_imports():
     mi = modelindex.load("tests/test-mi/07_import_models")
 
-    print(mi)
     assert "Models" in mi.data
     assert isinstance(mi.models, ModelList)
     assert len(mi.models) == 2
