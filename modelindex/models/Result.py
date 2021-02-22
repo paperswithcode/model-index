@@ -5,6 +5,11 @@ from modelindex.utils import lowercase_keys, load_any_file, full_filepath
 
 
 class Result(BaseModelIndex):
+    COMMON_FIELDS = [
+        "Task",
+        "Dataset",
+        "Metrics",
+    ]
 
     def __init__(self,
                  task: str,

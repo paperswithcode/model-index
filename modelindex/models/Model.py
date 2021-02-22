@@ -11,6 +11,17 @@ from modelindex.utils import lowercase_keys, full_filepath, load_any_file, expan
 
 
 class Model(BaseModelIndex):
+    COMMON_FIELDS = [
+        "Name",
+        "Metadata",
+        "Results",
+        "Paper",
+        "Code",
+        "Weights",
+        "Config",
+        "README",
+        "In Collection"
+    ]
 
     def __init__(self,
                  name: str,

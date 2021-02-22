@@ -3,6 +3,9 @@ from ordered_set import OrderedSet
 
 
 class BaseModelIndex:
+
+    COMMON_FIELDS = []
+
     def __init__(self,
                  data: Union[List, Dict] = None,
                  filepath: str = None,
@@ -94,3 +97,66 @@ class BaseModelIndex:
                 print(e)
         else:
             return errors_formatted
+
+    def _str_for_dict_with_padding(self, padding=2):
+        """Produce a nice string for __str__ that describes this object.
+
+        Arga:
+            padding (int): number of spaces to indent
+        """
+        # padding at this level of indentation
+        pad = " "*padding
+        last_pad = " "*(padding-2)
+
+        # concatenate common fields
+        out = []
+        d = self.data.copy()
+        for field in self.COMMON_FIELDS:
+            if field in d:
+                val = d.pop(field)
+                if isinstance(val, BaseModelIndex):
+                    val_str = val._str_with_padding(padding+2)
+                else:
+                    val_str = str(val)
+                out.append(f"{field}={val_str}")
+
+        # add any remaining
+        if d:
+            out.append(f"custom={d}")
+
+        if self.filepath:
+            out.append(f"_filepath={self.filepath}")
+
+        name = type(self).__name__
+
+        if out:
+            return f"{name}(\n{pad}%s\n{last_pad})" % f",\n{pad}".join(out)
+        else:
+            return f"{name}()"
+
+    def _str_with_padding(self, padding=2):
+        # if dict use the default
+        if isinstance(self.data, dict):
+            return self._str_for_dict_with_padding(padding)
+        elif isinstance(self.data, list):
+            # if list assume it's a list of dicts
+            out = []
+            for d in self.data:
+                if isinstance(d, BaseModelIndex):
+                    out.append(d._str_for_dict_with_padding(padding+2))
+
+            pad = " " * padding
+            last_pad = " " * (padding - 2)
+            if out:
+                return f"[\n{pad}%s,\n{last_pad}]" % f",\n{pad}".join(out)
+            else:
+                return f"[]"
+
+        else:
+            return super().__str__()
+
+    def __str__(self):
+        return self._str_with_padding()
+
+    def __repr__(self):
+        return self.__str__()

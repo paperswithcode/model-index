@@ -3,6 +3,16 @@ from modelindex.utils import full_filepath, load_any_file, lowercase_keys
 
 
 class Collection(Model):
+    COMMON_FIELDS = [
+        "Name",
+        "Metadata",
+        "Results",
+        "Paper",
+        "Code",
+        "Weights",
+        "Config",
+        "README",
+    ]
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
