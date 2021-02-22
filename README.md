@@ -1,8 +1,8 @@
 # model-index: maintain a source of truth for ML models
 
 `model-index` has two goals:
-- Make it easy to maintain a source-of-truth index of Machine Learning models and results 
-- Browse this source-of-truth index on [Papers with Code](https://paperswithcode.com/)
+- Make it easy to maintain a source-of-truth index of Machine Learning model metadata 
+- Enable the community browse this model metadata on [Papers with Code](https://paperswithcode.com/)
 
 The main design principle of `model-index` is **flexibility**. You can store your model metadata however is the
 most convenient for you - as JSONs, YAMLs or as annotations inside markdown. `model-index` provides a convenient
