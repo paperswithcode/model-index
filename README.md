@@ -193,17 +193,16 @@ index, or an individual file:
 
 via the CLI:
 ```shell script
-mi check     # check the whole index
-mi check models/metadata/inception_v3.json    # check one file
+mi check
 ```
 
 or programatically:
 
 ```python
-import modelindex as mi
+import modelindex
 
-mi.check()    # check the whole index
-mi.check("models/metadata/inception_v3.json")  # single file
+mi = modelindex.load("<path to model-index.yml>")
+mi.check()
 ```
 
 ## Querying the model-index
@@ -219,9 +218,9 @@ mi search "Name: Inception"
 or programmatically: 
 
 ```python
-import modelindex as mi
+import modelindex
 
-mi.search("Name: Inception")
+modelindex.search("Name: Inception")
 ``` 
 
 ## Uploading to Papers with Code
