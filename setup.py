@@ -3,7 +3,7 @@ from modelindex import __version__
 
 name = "model-index"
 author = "Robert Stojnic"
-author_email = "robert.stojnic@gmail.com"
+author_email = "hello@paperswithcode.com"
 url = "https://github.com/paperswithcode/model-index"
 
 

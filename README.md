@@ -46,6 +46,22 @@ Models:
     README: docs/inception-v3-readme.md
 ```
 
+The fields present in this file as **common fields** that are automatically recognized by Papers with Code
+and enable comparison across different models. You can also add any number of **custom fields** that are
+specific to your model or library. 
+
+Models, Metadata and Results can also be in separate files and just be referenced:
+
+```yaml
+Models:
+  - models/inception-v3.yml
+```
+
+## Getting started
+
+Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) on how to get started. 
+
+
 ### Model Collections
 
 To keep related model together, you can create Collections. The metadata format for collections is the same as for models
