@@ -47,7 +47,9 @@ Models:
 
 You can add any fields you like, but the ones above have a standard meaning across different models and libraries. 
 
-Metadata can also be stored **inside the model readme file**. For example:
+### Storing metadata in markdown files
+
+Metadata can also be directly stored in model's README file. For example:
 
 ```markdown
 <!--
