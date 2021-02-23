@@ -49,7 +49,7 @@ You can add any fields you like, but the ones above have a standard meaning acro
 
 ### Storing metadata in markdown files
 
-Metadata can also be directly stored in model's README file. For example:
+Metadata can also be directly stored in model's README file. For example in this `docs/rexnet.md` file:
 
 ```markdown
 <!--
