@@ -15,8 +15,10 @@ jobs:
           command: pip install -r requirements-dev.txt
           name: Install requirements
       - run:
-          command: py.test --cov modelindex
-          name: Test
+          command: make cov
+          name: Run unit tests with coverage
+      - store_artifacts:
+          path: htmlcov
 
 workflows:
   main:
