@@ -79,7 +79,7 @@ Models:
   - docs/rexnet.md
 ```
 
-## Getting started
+## Get started
 
 Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) on how to get started. 
 
