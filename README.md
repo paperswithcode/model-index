@@ -11,55 +11,48 @@ way to collect all this metadata into a single file that's browsable, searchable
 You can use this library locally or choose to upload the metadata to [Papers with Code](https://paperswithcode.com)
 to have your library featured on the website. 
 
-## How model-index works
+## Quick start
 
-There is a root file for the model index: `model-index.yml` that contains (or links to) all the metadata. 
-An example with a single model:
+Models are described with metadata and a README file. If you already have a README for your model,
+you can include the metadata in the comment at the top:
 
-```yaml
+`models/inception-v3.md`
+```markdown
+<!--
+Type: model-index
 Models:
   - Name: Inception v3
-    Metadata:
-      FLOPs: 11462568384
+  - Metadata:
       Parameters: 23834568
       Epochs: 90
-      Batch Size: 32
-      Training Data: ImageNet  
-      Training Techniques: 
-        - RMSProp
-        - Weight Decay
-        - Gradient Clipping
-        - Label Smoothing
-      Training Resources: 8x V100 GPUs
-      Architecture:
-        - Auxiliary Classifier
-        - Inception-v3 Module
-    Results:
-      - Task: Image Classification
-        Dataset: ImageNet
-        Metrics:
-          Top 1 Accuracy: 74.67%
-          Top 5 Accuracy: 92.1%
-    Paper: https://arxiv.org/abs/1512.00567v3
-    Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
-    Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth 
-    README: docs/inception-v3-readme.md
+  - Results:
+      Task: Image Classification
+      Dataset: ImageNet
+      Metrics:
+        Top 1 Accuracy: 74.67%
+        Top 5 Accuracy: 92.1%
+-->
+# Inception v3 Model
+
+Inception v3 is a convolutional neural network architecture.
+....
 ```
 
-The fields present in this file as **common fields** that are automatically recognized by Papers with Code
-and enable comparison across different models. You can also add any number of **custom fields** that are
-specific to your model or library. 
+Then link your markdown file in the global model index file `model-index.yml` (in the root of your
+repository):
 
-Models, Metadata and Results can also be in separate files and just be referenced:
-
+`model-index.yml`
 ```yaml
 Models:
-  - models/inception-v3.yml
+  - models/inception-v3.md
 ```
 
-## Getting started
+Alternatively, you can put all the metadata into the `model-index.yml` file and provide a link to 
+an unannotated markdown file. 
 
-Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) on how to get started. 
+## Learn more
+
+Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) for more examples. 
 
 ## Uploading to Papers with Code
 

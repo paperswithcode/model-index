@@ -39,8 +39,9 @@ specific to your model or library.
 
 ## Linking files
 
-Models, Metadata and Results can also be in separate files and linked
-into the main `model-index.yml` file:
+You don't have to keep everything in a single file. You can split the model
+index into separate files and then link to them in the main `model-index.yml`
+file (with `inception-v3.yml` containing the same model dictionary as above):
 
 ```yaml
 Models:

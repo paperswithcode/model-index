@@ -1,7 +1,12 @@
-# Model Collections
+# Collection
 
 To keep related model together, you can create Collections. The metadata format for collections is the same as for models
 and all member models **inherit** all the metadata and can override/add to it. 
+
+The fields of a collection are exactly the same as fields of a 
+[Model](model.html) - see the description there. 
+
+## A full example
 
 ```yaml
 Collections:
@@ -21,9 +26,9 @@ Models:
   - Name: Mask R-CNN (R101-C4, 3x)
     In Collection: Mask R-CNN 
     Metadata:
-      inference time (s/im):	0.145
-      train time (s/iter):	0.652
-      Training Memory (GB):	6.3
+      inference time (s/im): 0.145
+      train time (s/iter): 0.652
+      Training Memory (GB): 6.3
     Results:
       - Task: Object Detection
         Dataset: COCO minival
@@ -38,9 +43,9 @@ Models:
   - Name: Mask R-CNN (R50-C4, 3x)
     In Collection: Mask R-CNN 
     Metadata:
-      inference time (s/im):	0.111
-      train time (s/iter):	0.575
-      Training Memory (GB):	5.2
+      inference time (s/im): 0.111
+      train time (s/iter): 0.575
+      Training Memory (GB): 5.2
     Results:
       - Task: Object Detection
         Dataset: COCO minival

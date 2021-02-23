@@ -20,11 +20,11 @@ to have your library featured on the website.
    1_quickstart/upload.md
 ```
 
-## Data models
+## Data types
 
 ```eval_rst
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
 
    2_datamodels/modelindex.md
    2_datamodels/model.md
@@ -36,7 +36,7 @@ to have your library featured on the website.
 
 ```eval_rst
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   api/index.md
+   3_api/modelindex.md
 ```
