@@ -5,6 +5,7 @@ from modelindex.utils import lowercase_keys, load_any_file, full_filepath
 
 
 class Result(BaseModelIndex):
+    """Result represents a model result on a particular benchmark."""
     COMMON_FIELDS = [
         "Task",
         "Dataset",
@@ -17,6 +18,13 @@ class Result(BaseModelIndex):
                  metrics: Dict,
                  _filepath: str = None,
                  ):
+        """
+        Args:
+            task (str): The name of the ML task
+            dataset (str): The name of the dataset
+            metrics (dict): A dictionary of metrics
+            _filepath (str): Path to the file where the data was loaded from
+        """
         d = {
             "Task": task,
             "Dataset": dataset,
@@ -45,6 +53,12 @@ class Result(BaseModelIndex):
 
     @staticmethod
     def from_dict(d: Dict, _filepath: str = None):
+        """Create a Result from a dict.
+
+        Args:
+            d (dict): dictionary containing result data
+            _filepath (str): The file path to where the data was loaded from
+        """
         lc_keys = lowercase_keys(d)
 
         task = None
@@ -67,6 +81,12 @@ class Result(BaseModelIndex):
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
+        """Load a Result from a file.
+
+        Args:
+            filepath (str): File from which to load the result
+            parent_filepath (str): Parent filename (if file is imported from another file)
+        """
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
         d = raw
@@ -88,14 +108,17 @@ class Result(BaseModelIndex):
 
     @property
     def dataset(self):
+        """Get the dataset name"""
         return self.data.get("Dataset", None)
 
     @property
     def task(self):
+        """Get the ML task name"""
         return self.data.get("Task", None)
 
     @property
     def metrics(self):
+        """Get the dictionary of metrics"""
         return self.data.get("Metrics", None)
 
     # Setters

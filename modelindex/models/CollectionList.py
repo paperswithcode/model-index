@@ -8,20 +8,28 @@ from modelindex.utils import full_filepath, load_any_file, lowercase_keys, expan
 
 
 class CollectionList(BaseModelIndex):
+    """A list of Collection objects."""
     def __init__(self,
-                 models: Union[List[Union[Collection, Dict]], Collection, Dict] = None,
+                 collections: Union[List[Union[Collection, Dict]], Collection, Dict] = None,
                  _filepath: str = None,
                  ):
+        """
+        Args:
+            collections (list,Collection,dict): Either a list of Collection objects, a single Collection object or a
+                                                dict representing a Collection
+            _filepath: The file path to where the data was loaded from
 
-        if models is None:
-            models = []
+        """
 
-        if isinstance(models, Collection) or isinstance(models, dict):
-            models = [models]
+        if collections is None:
+            collections = []
+
+        if isinstance(collections, Collection) or isinstance(collections, dict):
+            collections = [collections]
 
         models_parsed = []
         check_errors = OrderedSet()
-        for m in models:
+        for m in collections:
             if isinstance(m, str):
                 # link to collection file, support wildcards
                 for model_file in expand_wildcard_path(m, _filepath):
@@ -66,9 +74,17 @@ class CollectionList(BaseModelIndex):
 
     @property
     def collections(self):
+        """Get the list of Collection objects"""
         return self.data
 
     def add(self, col: Union[Collection, Dict], _filepath: str = None):
+        """Add a Collection to the list.
+
+        Args:
+            col (Collection, dict): Either a Collection or a dict representing a collection
+            _filepath (str): The path from which it was loaded
+
+        """
         col_filepath = _filepath if _filepath is not None else self.filepath
         if isinstance(col, dict):
             self.data.append(Collection.from_dict(col, col_filepath))
@@ -77,6 +93,13 @@ class CollectionList(BaseModelIndex):
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
+        """Load a Collection from a file.
+
+        Args:
+            filepath (str): File from which to load the collection
+            parent_filepath (str): Parent filename (if file is imported from another file)
+        """
+
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
         d = raw

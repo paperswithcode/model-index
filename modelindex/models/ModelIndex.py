@@ -8,6 +8,8 @@ from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_
 
 
 class ModelIndex(BaseModelIndex):
+    """ModelIndex is the root object for the whole model index.
+    """
     COMMON_FIELDS = [
         "Models",
         "Collections",
@@ -17,6 +19,11 @@ class ModelIndex(BaseModelIndex):
                  data: dict = None,
                  filepath: str = None,
                  ):
+        """
+        Args:
+            data (dict): The root model index as a dictionary
+            filepath (str): The part from which it was loaded
+        """
 
         check_errors = OrderedSet()
 
@@ -93,21 +100,31 @@ class ModelIndex(BaseModelIndex):
 
     @staticmethod
     def from_dict(d: dict, filepath: str = None):
+        """Construct a ModelIndex from a dictionary
+
+        Args:
+            data (dict): The root model index as a dictionary
+            filepath (str): The part from which it was loaded
+        """
         return ModelIndex(d, filepath)
 
     @property
-    def models(self):
+    def models(self) -> ModelList:
+        """Get the list of models in the ModelIndex."""
         return self.data["Models"]
 
     @models.setter
     def models(self, value):
+        """Set the list of models in the ModelIndex."""
         self.data["Models"] = value
 
     @property
-    def collections(self):
+    def collections(self) -> CollectionList:
+        """Get the list of collections in the ModelIndex."""
         return self.data["Collections"]
 
     @collections.setter
     def collections(self, value):
+        """Set the list of collections in the ModelIndex"""
         self.data["Collections"] = value
 

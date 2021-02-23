@@ -32,8 +32,8 @@ to have your library featured on the website.
 
 ```eval_rst
 .. toctree::
-   :caption: API Documentation
+   :caption: Class Reference
    :maxdepth: 1
 
-   3_api/modelindex.md
+   3_api/index.md
 ```

@@ -8,10 +8,16 @@ from modelindex.utils import full_filepath, load_any_file, lowercase_keys, expan
 
 
 class ModelList(BaseModelIndex):
+    """ModeList is a list of Models."""
     def __init__(self,
                  models: Union[List[Union[Model, Dict, str]], Model, Dict] = None,
                  _filepath: str = None,
                  ):
+        """
+        Args:
+            models (list, Model, dict): Either a list of models, and individual model or a dict representing a model
+            _filepath (str): The path of the file from which the list is initialized
+        """
 
         check_errors = OrderedSet()
 
@@ -69,20 +75,32 @@ class ModelList(BaseModelIndex):
 
     @property
     def models(self):
+        """Get the list of models."""
         return self.data
 
     def add(self, model: Union[Model, Dict], _filepath: str = None):
+        """Add a model to the list.
+
+        Args:
+            model (Model, dict): Either a Model or a dict representing a model
+            _filepath (str): The path from which it was loaded
+
+        """
         model_filepath = _filepath if _filepath is not None else self.filepath
         if isinstance(model, dict):
             self.data.append(Model.from_dict(model, model_filepath))
         elif isinstance(model, Model):
             self.data.append(model)
 
-    def __len__(self):
-        return len(self.data)
-
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
+        """Load a ModelList from a file.
+
+        Args:
+            filepath (str): File from which to load the list of models.
+            parent_filepath (str): Parent filename (if file is imported from another file)
+
+        """
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
         d = raw

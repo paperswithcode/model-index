@@ -1,8 +1,8 @@
 ```eval_rst
-ModelIndex Class
+Result Class
 ===============
 
-.. automodule:: modelindex.models.ModelIndex
+.. automodule:: modelindex.models.Result
     :members:
     :no-undoc-members:
 ```

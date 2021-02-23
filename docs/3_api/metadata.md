@@ -1,8 +1,8 @@
 ```eval_rst
-ModelIndex Class
+Metadata Class
 ===============
 
-.. automodule:: modelindex.models.ModelIndex
+.. automodule:: modelindex.models.Metadata
     :members:
     :no-undoc-members:
 ```

@@ -111,7 +111,7 @@ class BaseModelIndex:
     def _str_for_dict_with_padding(self, padding=2):
         """Produce a nice string for __str__ that describes this object.
 
-        Arga:
+        Args:
             padding (int): number of spaces to indent
         """
         # padding at this level of indentation

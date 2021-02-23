@@ -3,6 +3,8 @@ from modelindex.utils import full_filepath, load_any_file, lowercase_keys
 
 
 class Collection(Model):
+    """A collection of models with common characteristics."""
+
     COMMON_FIELDS = [
         "Name",
         "Metadata",
@@ -16,6 +18,12 @@ class Collection(Model):
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
+        """Load a Collection from a file.
+
+        Args:
+            filepath (str): File from which to load the collection
+            parent_filepath (str): Parent filename (if file is imported from another file)
+        """
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
         d = raw

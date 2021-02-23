@@ -11,6 +11,8 @@ from modelindex.utils import lowercase_keys, full_filepath, load_any_file, expan
 
 
 class Model(BaseModelIndex):
+    """Model represents the ML model.
+    """
     COMMON_FIELDS = [
         "Name",
         "Metadata",
@@ -25,9 +27,9 @@ class Model(BaseModelIndex):
 
     def __init__(self,
                  name: str,
-                 metadata: Union[dict, Metadata, str] = None,
-                 results: Union[list, ResultList, Result, str] = None,
-                 paper: str = None,
+                 metadata: Union[Dict, Metadata, str] = None,
+                 results: Union[List, ResultList, Result, Dict, str] = None,
+                 paper: Union[str, Dict] = None,
                  code: str = None,
                  weights: str = None,
                  config: str = None,
@@ -36,6 +38,21 @@ class Model(BaseModelIndex):
                  _filepath: str = None,
                  **kwargs,
                  ):
+        """
+        Args:
+            name (str): Name of the model
+            metadata (Metadata, dict, str): Metadata object, metadata dict or a filepath to the metadata file
+            results (ResultList, Result, list, dict, str): ResultList, a single Results, a list of result dicts, a single
+                                                     result dict, or a filepath to the result file
+            paper (str, dict): URL to the paper, or a structured dict with paper metadata (title, url)
+            code (str): URL to the code snippet
+            weights (str): URL to the pretrained weights
+            config (str): URL to the config file
+            readme (str): path to the README file for the model
+            in_collection (str, List): name of the collection to which the model belongs to
+            _filepath: The file path to where the data was loaded from
+            **kwargs: Any other custom fields
+        """
 
         check_errors = OrderedSet()
 
@@ -94,6 +111,13 @@ class Model(BaseModelIndex):
 
     @classmethod
     def from_dict(cls, d: Dict, _filepath: str = None, _path_to_readme: str = None):
+        """Create a Model from a dictionary.
+
+        Args:
+            d (dict): dictionary containing models data
+            _filepath (str): The file path to where the data was loaded from
+            _path_to_readme (str): Path to the README file if metadata was extracted from a README
+        """
         lc_keys = lowercase_keys(d)
 
         copy_fields = [
@@ -130,6 +154,12 @@ class Model(BaseModelIndex):
 
     @staticmethod
     def from_file(filepath: str = None, parent_filepath: str = None):
+        """Load a Model from a file.
+
+        Args:
+            filepath (str): File from which to load the model
+            parent_filepath (str): Parent filename (if file is imported from another file)
+        """
         fullpath = full_filepath(filepath, parent_filepath)
         raw, md_path = load_any_file(filepath, parent_filepath)
         d = raw
@@ -153,38 +183,47 @@ class Model(BaseModelIndex):
     # Getters
     @property
     def name(self):
+        """Get the model name"""
         return self.data.get("Name", None)
 
     @property
     def paper(self):
+        """Get the model paper"""
         return self.data.get("Paper", None)
 
     @property
     def code(self):
+        """Get the URL to code"""
         return self.data.get("Code", None)
 
     @property
     def weights(self):
+        """Get the URL to weights"""
         return self.data.get("Weights", None)
 
     @property
     def config(self):
+        """Get the URL to the config file"""
         return self.data.get("Config", None)
 
     @property
     def readme(self):
+        """Get the path to the model README"""
         return self.data.get("README", None)
 
     @property
     def metadata(self):
+        """Get the metadata as a Metadata object"""
         return self.data.get("Metadata", None)
 
     @property
     def results(self):
+        """Get the results as a Result object"""
         return self.data.get("Results", None)
 
     @property
     def in_collection(self):
+        """Get the name of the collection of which this model is part of."""
         return self.data.get("In Collection", None)
 
     # Setters
