@@ -11,48 +11,76 @@ way to collect all this metadata into a single file that's browsable, searchable
 You can use this library locally or choose to upload the metadata to [Papers with Code](https://paperswithcode.com)
 to have your library featured on the website. 
 
-## Quick start
+## How it works
 
-Models are described with metadata and a README file. If you already have a README for your model,
-you can include the metadata in the comment at the top:
+There is a root file for the model index: `model-index.yml` that links to (or contains) metadata. 
 
-`models/inception-v3.md`
+```yaml
+Models:
+  - Name: Inception v3
+    Metadata:
+      FLOPs: 11462568384
+      Parameters: 23834568
+      Epochs: 90
+      Batch Size: 32
+      Training Data: ImageNet  
+      Training Techniques: 
+        - RMSProp
+        - Weight Decay
+        - Gradient Clipping
+        - Label Smoothing
+      Training Resources: 8x V100 GPUs
+      Architecture:
+        - Auxiliary Classifier
+        - Inception-v3 Module
+    Results:
+      - Task: Image Classification
+        Dataset: ImageNet
+        Metrics:
+          Top 1 Accuracy: 74.67%
+          Top 5 Accuracy: 92.1%
+    Paper: https://arxiv.org/abs/1512.00567v3
+    Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
+    Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth 
+    README: docs/inception-v3-readme.md
+```
+
+The fields present in this file as **common fields** that are automatically recognized by Papers with Code
+and enable comparison across different models. You can also add any number of **custom fields** that are
+specific to your model or library. 
+
+Metadata can also be stored **inside the model readme file**. For example:
+
 ```markdown
 <!--
 Type: model-index
-Models:
-  - Name: Inception v3
-  - Metadata:
-      Parameters: 23834568
-      Epochs: 90
-  - Results:
-      Task: Image Classification
-      Dataset: ImageNet
-      Metrics:
-        Top 1 Accuracy: 74.67%
-        Top 5 Accuracy: 92.1%
+Name: RexNet
+Metadata: 
+  Epochs: 400
+  Batch Size: 512
 -->
-# Inception v3 Model
 
-Inception v3 is a convolutional neural network architecture.
-....
+# Summary
+
+Rank Expansion Networks (ReXNets) follow a set of new design principles for designing bottlenecks in image classification models.
+
+## Usage
+
+import timm
+m = timm.create_model('rexnet_100', pretrained=True)
+m.eval()
 ```
 
-Then link your markdown file in the global model index file `model-index.yml` (in the root of your
-repository):
+In this case, you just need to include this markdown file into the global `model-index.yml` file:
 
-`model-index.yml`
 ```yaml
 Models:
-  - models/inception-v3.md
+  - docs/rexnet.md
 ```
 
-Alternatively, you can put all the metadata into the `model-index.yml` file and provide a link to 
-an unannotated markdown file. 
+## Getting started
 
-## Learn more
-
-Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) for more examples. 
+Check out our [official documentation](https://model-index.readthedocs.io/en/latest/) on how to get started. 
 
 ## Uploading to Papers with Code
 
