@@ -58,6 +58,7 @@ Name: RexNet
 Metadata: 
   Epochs: 400
   Batch Size: 512
+Paper: https://arxiv.org/abs/2007.00992v1
 -->
 
 # Summary

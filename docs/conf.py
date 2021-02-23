@@ -76,7 +76,6 @@ html_static_path = ["_static"]
 
 
 # autodoc
-
 autoclass_content = "both"
 autodoc_default_options = {
     "member-order": "bysource",
@@ -86,14 +85,10 @@ autodoc_default_options = {
 
 
 # recommonmark
-
-
 def setup(app):
     app.add_config_value(
         "recommonmark_config",
         {
-            "enable_auto_toc_tree": True,
-            "auto_toc_tree_section": True,
             "enable_math": True,
             "enable_inline_math": True,
             "enable_eval_rst": True,

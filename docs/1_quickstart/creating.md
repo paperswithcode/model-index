@@ -1,18 +1,14 @@
-# Creating a new index
-
-The model index is just a collection of interlinked yaml/json/markdown files,
-so you can just create them yourself. 
-
-We also provide a set of classes that make the creation easy (docs coming soon!). 
-
-## Including metadata from other files
+# Importing metadata
 
 It might not be convenient to maintain a huge `model-index.yml` file in your repository. So `model-index` make it easy
 to stitch together metadata from many different sources. 
 
-### Importing fields
+Data can be imported from other YAML files, JSON files and from Markdown files. 
 
-For each field that expects a list or dictionary, you can provide a filename instead. For example:
+## Importing fields
+
+For [Models](../2_datamodels/model.html), [Metadata](../2_datamodels/model.html#metadata) and 
+[Results](../2_datamodels/model.html#result) you can provide a filename instead of actual values. For example:
 
 ```yaml
 Models:
@@ -21,9 +17,11 @@ Models:
     Results: models/metadata/inception_v3_results.json
 ``` 
 
-Both YAML and JSON are supported. The content of the file needs to conform to the expected structure specified above. 
+Both YAML and JSON are supported. The content of the file needs to conform to the expected 
+structure specified for [Models](../2_datamodels/model.html), [Metadata](../2_datamodels/model.html#metadata) and 
+[Results](../2_datamodels/model.html#result). 
 
-### Importing a whole YAML file
+## Importing a whole YAML file
 
 Import in your `model-index.yml`:
 
@@ -32,9 +30,10 @@ Import:
   - models/metadata/inception_v3.yml
 ```
 
-Here the `inception_v3` yaml file has the same format as the root `model-index.yml` file. 
+Here the `inception_v3.yml` file has to be in [ModelIndex](../2_datamodels/modelindex.html) format
+(i.e. the same as the root `model-index.yml` file).
 
-### Importing a whole JSON file
+## Importing a whole JSON file
 
 The imported file can also be in JSON format, as long as it has the same structure as the YAML:
 
@@ -44,7 +43,7 @@ Import:
   - models/metadata/mnasnet_200.json
 ```
 
-### Importing a whole Markdown file
+## Importing a whole Markdown file
 
 ```yaml
 Import:
@@ -54,7 +53,7 @@ Import:
 Instead of specifying the `README` field of the model, you can add the model metadata directly into the markdown file.
 
 Include the metadata in YAML format in a comment, with a `Type: model-index` key to indicate that it should be parsed
-by the `model-index` library. So, the `rexnet.md` would look like this:
+by the `model-index` library. So, the `rexnet.md` could look like this:
 
 ```markdown
 <!--
@@ -66,14 +65,15 @@ Models:
 -->
 # Summary
 
-Rank Expansion Networks (ReXNets) follow a set of new design principles for designing bottlenecks in image classification models
+Rank Expansion Networks (ReXNets) follow a set of new design principles for 
+designing bottlenecks in image classification models.
 
 ## How to use this model
 
 ....
 ``` 
 
-### Importing multiple files
+## Importing multiple files
 
 Specify wildcards to import multiple files: 
 
@@ -82,7 +82,3 @@ Import:
   - docs/*.md
   - models/metadata/*.json
 ```
-
-## Programmatic `markdown-index.yml`
-
-It is possible to generate all the data programatically as well. More docs to come on this soon!

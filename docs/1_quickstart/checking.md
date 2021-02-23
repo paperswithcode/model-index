@@ -1,4 +1,4 @@
-# Checking an index
+# Checking the index
 
 To ensure the model index doesn't have any errors in its metadata you can run an automated check on the whole
 index, or an individual file:

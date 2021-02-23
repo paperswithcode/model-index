@@ -7,10 +7,9 @@ The model-index library with two goals:
 You can use this library locally or choose to upload the metadata to [Papers with Code](https://paperswithcode.com)
 to have your library featured on the website. 
 
-## Getting Started
-
 ```eval_rst
 .. toctree::
+   :caption: Getting Started
    :maxdepth: 1
 
    1_quickstart/installation.md
@@ -20,10 +19,9 @@ to have your library featured on the website.
    1_quickstart/upload.md
 ```
 
-## Data types
-
 ```eval_rst
 .. toctree::
+   :caption: Data Types
    :maxdepth: 1
 
    2_datamodels/modelindex.md
@@ -32,10 +30,9 @@ to have your library featured on the website.
 ```
 
 
-## API Documentation
-
 ```eval_rst
 .. toctree::
+   :caption: API Documentation
    :maxdepth: 1
 
    3_api/modelindex.md

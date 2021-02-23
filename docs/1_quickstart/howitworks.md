@@ -37,16 +37,36 @@ The fields present in this file as **common fields** that are automatically reco
 and enable comparison across different models. You can also add any number of **custom fields** that are
 specific to your model or library. 
 
-## Linking files
+## Storing metadata in markdown files
 
-You don't have to keep everything in a single file. You can split the model
-index into separate files and then link to them in the main `model-index.yml`
-file (with `inception-v3.yml` containing the same model dictionary as above):
+Metadata can also be directly stored in model's README file. For example in this `docs/rexnet.md` file:
+
+```markdown
+<!--
+Type: model-index
+Name: RexNet
+Metadata: 
+  Epochs: 400
+  Batch Size: 512
+Paper: https://arxiv.org/abs/2007.00992v1
+-->
+
+# Summary
+
+Rank Expansion Networks (ReXNets) follow a set of new design 
+principles for designing bottlenecks in image classification models.
+
+## Usage
+
+import timm
+m = timm.create_model('rexnet_100', pretrained=True)
+m.eval()
+```
+
+In this case, you just need to include this markdown file into the global `model-index.yml` file:
 
 ```yaml
 Models:
-  - models/inception-v3.yml
+  - docs/rexnet.md
 ```
-
-See [Including metadata from other files](./creating.html#including-metadata-from-other-files) for more information.
 
