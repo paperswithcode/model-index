@@ -1,5 +1,7 @@
 # model-index: maintain a source of truth for ML models
 
+[![paperswithcode](https://circleci.com/gh/paperswithcode/model-index.svg?style=svg)](https://app.circleci.com/pipelines/github/paperswithcode/model-index)
+
 `model-index` has two goals:
 - Make it easy to maintain a source-of-truth index of Machine Learning model metadata 
 - Enable the community browse this model metadata on [Papers with Code](https://paperswithcode.com/)
