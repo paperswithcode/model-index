@@ -1,4 +1,4 @@
-# Welcome to the model-index documentation
+# Welcome to model-index documentation
 
 The model-index library with two goals:
 - Make it easy to maintain a source-of-truth index of ML model metadata 

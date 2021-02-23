@@ -37,14 +37,15 @@ The fields present in this file as **common fields** that are automatically reco
 and enable comparison across different models. You can also add any number of **custom fields** that are
 specific to your model or library. 
 
-## Multiple files
+## Linking files
 
-Models, Metadata and Results can also be in separate files and just be referenced:
+Models, Metadata and Results can also be in separate files and linked
+into the main `model-index.yml` file:
 
 ```yaml
 Models:
   - models/inception-v3.yml
 ```
 
-See :ref:`Including metadata from other files` for more information.
+See [Including metadata from other files](./creating.html#including-metadata-from-other-files) for more information.
 
