@@ -62,7 +62,8 @@ Metadata:
 
 # Summary
 
-Rank Expansion Networks (ReXNets) follow a set of new design principles for designing bottlenecks in image classification models.
+Rank Expansion Networks (ReXNets) follow a set of new design 
+principles for designing bottlenecks in image classification models.
 
 ## Usage
 
