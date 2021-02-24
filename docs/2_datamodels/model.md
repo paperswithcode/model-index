@@ -43,7 +43,7 @@ Result is a dict capturing the evaluation results of the model. It has
 these fields:
 
 - `Task` - Name of the task (for full see [Benchmarks](https://paperswithcode.com/sota) on Papers with Code)
-- `Dadataset` - Name of the dataset (for full see [Datasets](https://paperswithcode.com/datasets) on Papers with Code)
+- `Dataset` - Name of the dataset (for full see [Datasets](https://paperswithcode.com/datasets) on Papers with Code)
 - `Metrics` - a list of dictionaries with metrics. For relevant metrics consult the see [Benchmarks](https://paperswithcode.com/sota) on Papers with Code.
 
 ## A full example
