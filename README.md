@@ -1,9 +1,19 @@
 # model-index: maintain a source of truth for ML models
 
-<p align="center">
-  <a href="https://circleci.com/gh/paperswithcode/model-index">
-        <img alt="Tests" src="https://img.shields.io/circleci/build/github/paperswithcode/model-index/main">
-  </a>
+<p>
+
+<a href="https://app.circleci.com/pipelines/github/paperswithcode/model-index">
+  <img alt="Tests" src="https://img.shields.io/circleci/build/github/paperswithcode/model-index/main">
+</a>
+
+<a href="https://pypi.org/project/model-index/">
+  <img alt="PyPI" src="https://img.shields.io/pypi/v/model-index">
+</a>
+
+<a href="https://model-index.readthedocs.io/en/latest/">
+  <img alt="Docs" src="https://img.shields.io/readthedocs/model-index">
+</a>
+
 </p>
 
 `model-index` has two goals:
