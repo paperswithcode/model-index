@@ -1,3 +1,5 @@
+# model-index: maintain a source of truth for ML models
+
 <p align="center">
 
 <a href="https://app.circleci.com/pipelines/github/paperswithcode/model-index">
@@ -13,8 +15,6 @@
 </a>
 
 </p>
-
-# model-index: maintain a source of truth for ML models
 
 `model-index` has two goals:
 - Make it easy to maintain a source-of-truth index of Machine Learning model metadata 
