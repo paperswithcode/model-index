@@ -1,6 +1,6 @@
 # model-index: maintain a source of truth for ML models
 
-<p class="text-center">
+<p align="center">
 
 <a href="https://app.circleci.com/pipelines/github/paperswithcode/model-index">
   <img alt="Tests" src="https://img.shields.io/circleci/build/github/paperswithcode/model-index/main">
