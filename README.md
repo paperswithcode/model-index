@@ -35,7 +35,7 @@ There is a root file for the model index: `model-index.yml` that links to (or co
 Models:
   - Name: Inception v3
     Metadata:
-      FLOPs: 11462568384
+      FLOPs: 5731284192
       Parameters: 23834568
       Training Data: ImageNet  
       Training Resources: 8x V100 GPUs
