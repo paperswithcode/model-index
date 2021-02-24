@@ -1,9 +1,9 @@
 # model-index: maintain a source of truth for ML models
 
 <p align="center">
-  
-[![paperswithcode](https://circleci.com/gh/paperswithcode/model-index.svg?style=svg)](https://app.circleci.com/pipelines/github/paperswithcode/model-index)
-
+  <a href="https://circleci.com/gh/paperswithcode/model-index">
+        <img alt="Tests" src="https://img.shields.io/circleci/build/github/paperswithcode/model-index/main">
+  </a>
 </p>
 
 `model-index` has two goals:
