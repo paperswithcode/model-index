@@ -37,18 +37,8 @@ Models:
     Metadata:
       FLOPs: 11462568384
       Parameters: 23834568
-      Epochs: 90
-      Batch Size: 32
       Training Data: ImageNet  
-      Training Techniques: 
-        - RMSProp
-        - Weight Decay
-        - Gradient Clipping
-        - Label Smoothing
       Training Resources: 8x V100 GPUs
-      Architecture:
-        - Auxiliary Classifier
-        - Inception-v3 Module
     Results:
       - Task: Image Classification
         Dataset: ImageNet
@@ -65,7 +55,7 @@ You can add any fields you like, but the ones above have a standard meaning acro
 
 ### Storing metadata in markdown files
 
-Metadata can also be directly stored in model's README file. For example in this `docs/rexnet.md` file:
+Metadata can also be directly stored in a model's README file. For example in this `docs/rexnet.md` file:
 
 ```markdown
 <!--
@@ -104,6 +94,8 @@ Check out our [official documentation](https://model-index.readthedocs.io/en/lat
 
 To feature your library on Papers with Code, get in touch with `hello@paperswithcode.com` and the model index
 of your library will be automatically included into Papers with Code. 
+
+
 
 
 
