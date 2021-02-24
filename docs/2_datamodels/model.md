@@ -54,7 +54,7 @@ An example of the full model dict is shown below:
 ```yaml
 Name: Inception v3
 Metadata:
-  FLOPs: 11462568384
+  FLOPs: 5731284192
   Parameters: 23834568
   Epochs: 90
   Batch Size: 32
