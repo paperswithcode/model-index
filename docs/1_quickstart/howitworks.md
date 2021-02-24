@@ -18,6 +18,7 @@ Models:
         - Gradient Clipping
         - Label Smoothing
       Training Resources: 8x V100 GPUs
+      Training Time: 24 hours
       Architecture:
         - Auxiliary Classifier
         - Inception-v3 Module
