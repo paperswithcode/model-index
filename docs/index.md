@@ -1,6 +1,7 @@
 # Welcome to model-index documentation
 
-The model-index library with two goals:
+The model-index library has two goals:
+
 - Make it easy to maintain a source-of-truth index of ML model metadata 
 - Enable the community to browse this model metadata on [Papers with Code](https://paperswithcode.com/) 
 
