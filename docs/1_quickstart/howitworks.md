@@ -34,7 +34,7 @@ Models:
     README: docs/inception-v3-readme.md
 ```
 
-The fields present in this file as **common fields** that are automatically recognized by Papers with Code
+The fields present in this file are **common fields** that are automatically recognized by Papers with Code
 and enable comparison across different models. You can also add any number of **custom fields** that are
 specific to your model or library. 
 
