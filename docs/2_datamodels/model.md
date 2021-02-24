@@ -31,7 +31,8 @@ fields are:
 - `Training Data` - Names of dataset on which the models is trained on
 - `Training Techniques` - A list of training techniques (for the full list see 
 [Methods](https://paperswithcode.com/methods) on Papers with Code)
-- `Training resources` - The hardware used
+- `Training Resources` - The hardware used for training
+- `Training Time` - How many hours or days it takes to train.
 - `Architecture` - A list of architectural features of the model (for the full list see 
 [Methods](https://paperswithcode.com/methods) on Papers with Code)
 
@@ -48,7 +49,7 @@ these fields:
 
 ## A full example
 
-An example of the full model dict:
+An example of the full model dict is shown below:
 
 ```yaml
 Name: Inception v3
