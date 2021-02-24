@@ -1,6 +1,6 @@
 # Model
 
-A model represent all the information about an Machine Learning model. 
+A model represents all the information about a Machine Learning model. 
 
 Model is represented by a dict with these common fields:
 
