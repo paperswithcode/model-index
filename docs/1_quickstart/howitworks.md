@@ -38,6 +38,27 @@ The fields present in this file are **common fields** that are automatically rec
 and enable comparison across different models. You can also add any number of **custom fields** that are
 specific to your model or library. 
 
+For example:
+
+```yaml
+Models:
+  - Name: My new model
+    Metadata:
+      Training Time: 24 hours
+      my parameter: 120
+      my parameter2: 
+        sub parameter1: value 1
+        sub parameter2: value 2
+      
+      
+```
+
+So you can mix-and-match from our set of common field and any other field you want to add.
+
+We recommend putting the `model-index.yml` file in the root of your repository (so that relative links such as 
+`docs/inception-v3-readme.md` are easier to write), but you can also put it anywhere else in the repository (e.g.
+int your `docs/` or `models/` folder). 
+
 ## Storing metadata in markdown files
 
 Metadata can also be directly stored in model's README file. For example in this `docs/rexnet.md` file:

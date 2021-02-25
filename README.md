@@ -53,6 +53,10 @@ Models:
 
 You can add any fields you like, but the ones above have a standard meaning across different models and libraries. 
 
+We recommend putting the `model-index.yml` file in the root of your repository (so that relative links such as 
+`docs/inception-v3-readme.md` are easier to write), but you can also put it anywhere else in the repository (e.g.
+int your `docs/` or `models/` folder). 
+
 ### Storing metadata in markdown files
 
 Metadata can also be directly stored in a model's README file. For example in this `docs/rexnet.md` file:

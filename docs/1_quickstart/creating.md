@@ -21,17 +21,53 @@ Both YAML and JSON are supported. The content of the file needs to conform to th
 structure specified for [Models](../2_datamodels/model.html), [Metadata](../2_datamodels/model.html#metadata) and 
 [Results](../2_datamodels/model.html#result). 
 
+So in this case, `incdeption_v3.yml` could look like this:
+
+```yaml
+Batch Size: 120
+Epochs: 100
+Dropout: 0.1
+```
+
+and `inception_v3_results.json` could look like this:
+
+```json
+[
+  {
+    "Task": "Image Classification",
+    "Dataset": "ImageNet ReaL",
+    "Metrics": {
+      "Accuracy": "90.2%"
+    }   
+  }
+]
+```
+
 ## Importing a whole YAML file
 
 Import in your `model-index.yml`:
 
 ```yaml
 Import:
-  - models/metadata/inception_v3.yml
+  - models/metadata/inception_models.yml
 ```
 
-Here the `inception_v3.yml` file has to be in [ModelIndex](../2_datamodels/modelindex.html) format
-(i.e. the same as the root `model-index.yml` file).
+Here the `inception_models.yml` file has to be in [ModelIndex](../2_datamodels/modelindex.html) format
+(i.e. the same as the root `model-index.yml` file). For example:
+
+```yaml
+Collection:
+  - Name: Inception models
+Models:
+  - Name: Inception v3 (original)
+    In Collection: Inception models
+    Metadata:
+      Epochs: 90
+  - Name: Inception v3 (retrained)
+    In Collection: Inception models
+    Metadata:
+      Epochs: 120
+```
 
 ## Importing a whole JSON file
 
@@ -41,6 +77,15 @@ The imported file can also be in JSON format, as long as it has the same structu
 Import:
   - models/metadata/mnasnet_100.json
   - models/metadata/mnasnet_200.json
+```
+
+So one of these JSON files could look like:
+
+```json
+{
+  "Epochs": 120,
+  "Dropout": 0.2
+}
 ```
 
 ## Importing a whole Markdown file
@@ -73,7 +118,7 @@ designing bottlenecks in image classification models.
 ....
 ``` 
 
-## Importing multiple files
+## Using wildcards to import multiple files
 
 Specify wildcards to import multiple files: 
 

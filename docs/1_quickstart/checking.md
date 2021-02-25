@@ -5,7 +5,7 @@ index, or an individual file:
 
 via the CLI:
 ```shell script
-$ mi check  # Check the entire index
+$ mi check  # Check the entire index (model-index.yml in current directory)
 $ mi check models/metadata/inception_v3.json    # check one file
 ```
 
