@@ -1,7 +1,7 @@
 # Importing metadata
 
 It might not be convenient to maintain a huge `model-index.yml` file in your repository. So `model-index` make it easy
-to stitch together metadata from many different sources. 
+to split data into smaller file. 
 
 Data can be imported from other YAML files, JSON files and from Markdown files. 
 
@@ -45,7 +45,8 @@ and `inception_v3_results.json` could look like this:
 
 ## Importing a whole YAML file
 
-Import in your `model-index.yml`:
+You can split the model index into smaller files (e.g. containing a single collection of related models)
+and then import them into the main `model-index.yml` file:
 
 ```yaml
 Import:

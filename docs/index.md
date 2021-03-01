@@ -16,7 +16,7 @@ to have your library featured on the website.
    1_quickstart/installation.md
    1_quickstart/howitworks.md
    1_quickstart/examples.md
-   1_quickstart/creating.md
+   1_quickstart/importing.md
    1_quickstart/checking.md
    1_quickstart/upload.md
 ```
