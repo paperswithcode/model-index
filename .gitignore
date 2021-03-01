@@ -3,3 +3,5 @@ __pycache__
 htmlcov
 model_index.egg-info
 _build
+build
+dist
