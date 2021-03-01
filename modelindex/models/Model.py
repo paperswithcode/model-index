@@ -172,7 +172,7 @@ class Model(BaseModelIndex):
                 d = raw[lc_keys["models"]]
                 if isinstance(d, list):
                     from modelindex.models.ModelList import ModelList
-                    return ModelList(d, fullpath)
+                    return ModelList(d, fullpath, md_path)
 
             return Model.from_dict(d, fullpath, md_path)
         else:

@@ -12,12 +12,14 @@ class CollectionList(BaseModelIndex):
     def __init__(self,
                  collections: Union[List[Union[Collection, Dict]], Collection, Dict] = None,
                  _filepath: str = None,
+                 _path_to_readme: str = None,
                  ):
         """
         Args:
             collections (list,Collection,dict): Either a list of Collection objects, a single Collection object or a
                                                 dict representing a Collection
-            _filepath: The file path to where the data was loaded from
+            _filepath (str): The file path to where the data was loaded from
+            _path_to_readme (str): Path to README if it was loaded from there
 
         """
 
@@ -44,7 +46,7 @@ class CollectionList(BaseModelIndex):
             elif isinstance(m, Collection):
                 models_parsed.append(m)
             else:
-                models_parsed.append(Collection.from_dict(m, _filepath))
+                models_parsed.append(Collection.from_dict(m, _filepath, _path_to_readme))
 
         super().__init__(
             data=models_parsed,

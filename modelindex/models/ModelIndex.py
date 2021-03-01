@@ -18,11 +18,13 @@ class ModelIndex(BaseModelIndex):
     def __init__(self,
                  data: dict = None,
                  filepath: str = None,
+                 _path_to_readme: str = None
                  ):
         """
         Args:
             data (dict): The root model index as a dictionary
-            filepath (str): The part from which it was loaded
+            filepath (str): The path from which it was loaded
+            _path_to_readme (str): The path to the readme file (if loaded from there)
         """
 
         check_errors = OrderedSet()
@@ -48,7 +50,7 @@ class ModelIndex(BaseModelIndex):
                 models = merge_lists_data(models_list)
             # Syntax: Models: list[ model dict ]
             elif models is not None and not isinstance(models, ModelList):
-                models = ModelList(models, filepath)
+                models = ModelList(models, filepath, _path_to_readme)
 
             d["Models"] = models
 
@@ -65,7 +67,7 @@ class ModelIndex(BaseModelIndex):
                 collections = merge_lists_data(collections_list)
             # Syntax: Collections: list[ model dict ]
             elif collections is not None and not isinstance(collections, CollectionList):
-                collections = CollectionList(collections, filepath)
+                collections = CollectionList(collections, filepath, _path_to_readme)
 
             d["Collections"] = collections
 
@@ -77,10 +79,10 @@ class ModelIndex(BaseModelIndex):
 
             for import_file in imp:
                 try:
-                    fullpath = full_filepath(import_file, filepath)
-                    all_loaded = load_any_files_wildcard(import_file, filepath)
-                    for raw, md_name in all_loaded:
-                        mi = ModelIndex.from_dict(raw, fullpath)
+                    for relpath in expand_wildcard_path(import_file, filepath):
+                        raw, md_name = load_any_file(relpath, filepath)
+                        fullpath = full_filepath(relpath, filepath)
+                        mi = ModelIndex.from_dict(raw, fullpath, md_name)
                         if mi.models:
                             for model in mi.models:
                                 d["Models"].add(model)
@@ -99,14 +101,15 @@ class ModelIndex(BaseModelIndex):
         self.lc_keys = lowercase_keys(data)
 
     @staticmethod
-    def from_dict(d: dict, filepath: str = None):
+    def from_dict(d: dict, filepath: str = None, _path_to_readme: str = None):
         """Construct a ModelIndex from a dictionary
 
         Args:
             data (dict): The root model index as a dictionary
-            filepath (str): The part from which it was loaded
+            filepath (str): The path from which it was loaded
+            _path_to_readme (str): Path to the README.md file if loaded from there
         """
-        return ModelIndex(d, filepath)
+        return ModelIndex(d, filepath, _path_to_readme)
 
     @property
     def models(self) -> ModelList:

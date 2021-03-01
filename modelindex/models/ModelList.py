@@ -12,11 +12,13 @@ class ModelList(BaseModelIndex):
     def __init__(self,
                  models: Union[List[Union[Model, Dict, str]], Model, Dict] = None,
                  _filepath: str = None,
+                 _path_to_readme: str = None,
                  ):
         """
         Args:
             models (list, Model, dict): Either a list of models, and individual model or a dict representing a model
             _filepath (str): The path of the file from which the list is initialized
+            _path_to_readme (str): Path to README if loaded from there
         """
 
         check_errors = OrderedSet()
@@ -45,7 +47,7 @@ class ModelList(BaseModelIndex):
                 models_parsed.append(m)
             else:
                 # dict
-                models_parsed.append(Model.from_dict(m, _filepath))
+                models_parsed.append(Model.from_dict(m, _filepath, _path_to_readme))
 
         super().__init__(
             data=models_parsed,

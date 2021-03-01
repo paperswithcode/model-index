@@ -151,3 +151,11 @@ def test_models_import_wildcard():
 
     assert mi.models[0].readme == "models_md/m1.md"
     assert mi.models[1].readme == "models_md/m2.md"
+
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi9.yml")
+
+    assert len(mi.collections) == 1
+    assert len(mi.models) == 2
+
+    assert mi.models[0].readme == "models_md/m1.md"
+    assert mi.models[1].readme == "models_md/m2.md"
