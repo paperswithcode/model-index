@@ -142,3 +142,12 @@ def test_wildcard_model_import():
     assert mi.models[0].results[0].metrics["Top 1 Accuracy"] == "11%"
     assert mi.models[0].results[1].metrics["Top 1 Accuracy"] == "21%"
 
+
+def test_models_import_wildcard():
+    mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi8.yml")
+
+    assert len(mi.collections) == 1
+    assert len(mi.models) == 2
+
+    assert mi.models[0].readme == "models_md/m1.md"
+    assert mi.models[1].readme == "models_md/m2.md"

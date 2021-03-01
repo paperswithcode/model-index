@@ -26,7 +26,7 @@ class Model(BaseModelIndex):
     ]
 
     def __init__(self,
-                 name: str,
+                 name: str = None,
                  metadata: Union[Dict, Metadata, str] = None,
                  results: Union[List, ResultList, Result, Dict, str] = None,
                  paper: Union[str, Dict] = None,
@@ -145,7 +145,7 @@ class Model(BaseModelIndex):
                     dd[field_name] = dd.pop(lc_keys[key])
 
         if _path_to_readme:
-            dd["README"] = _path_to_readme
+            dd["readme"] = _path_to_readme
 
         return cls(
             _filepath=_filepath,
