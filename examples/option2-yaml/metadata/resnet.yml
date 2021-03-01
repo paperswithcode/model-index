@@ -1,0 +1,17 @@
+Metadata:
+  Batch Size: 32
+  Epochs: 90
+  FLOPs: 15667943424
+  ID: resnet101
+  LR: 0.1
+  LR Gamma: 0.1
+  LR Step Size: 30
+  Momentum: 0.9
+  Parameters: 44549160
+  Training Data:
+  - ImageNet
+  Training Resources: 8x NVIDIA V100 GPUs
+  Training Techniques:
+  - Weight Decay
+  - SGD with Momentum
+  Weight Decay: 0.0001

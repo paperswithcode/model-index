@@ -1,0 +1,57 @@
+Collections:
+- Name: AlexNet
+  Paper: '1404.5997'
+- Name: ResNet
+  Paper: '1512.03385'
+  Metadata:
+    Architecture:
+      - 1x1 Convolution
+      - Bottleneck Residual Block
+      - Batch Normalization
+      - Convolution
+      - Global Average Pooling
+      - Residual Block
+      - Residual Connection
+      - ReLU
+      - Max Pooling
+      - Softmax
+Models:
+- Name: AlexNet
+  README: docs/alexnet.md
+  Code: https://github.com/pytorch/vision/blob/5a315453da5089d66de94604ea49334a66552524/torchvision/models/alexnet.py#L53
+  Config: https://github.com/pytorch/vision/tree/master/references/classification
+  In Collection: AlexNet
+  Metadata: metadata/alexnet.yml
+  Results:
+  - Dataset: ImageNet
+    Metrics:
+      Top 1 Accuracy: 56.55%
+      Top 5 Accuracy: 79.09%
+    Task: Image Classification
+  Weights: https://download.pytorch.org/models/alexnet-owt-4df8aa71.pth
+- Name: ResNet-101
+  README: docs/resnet.md
+  Code: https://github.com/pytorch/vision/blob/5a315453da5089d66de94604ea49334a66552524/torchvision/models/resnet.py#L304
+  Config: https://github.com/pytorch/vision/tree/master/references/classification
+  In Collection: ResNet
+  Metadata: metadata/resnet.yml
+  Results:
+  - Dataset: ImageNet
+    Metrics:
+      Top 1 Accuracy: 77.37%
+      Top 5 Accuracy: 93.56%
+    Task: Image Classification
+  Weights: https://download.pytorch.org/models/resnet101-5d3b4d8f.pth
+- Name: ResNet-152
+  README: docs/resnet.md
+  Code: https://github.com/pytorch/vision/blob/5a315453da5089d66de94604ea49334a66552524/torchvision/models/resnet.py#L316
+  Config: https://github.com/pytorch/vision/tree/master/references/classification
+  In Collection: ResNet
+  Metadata: metadata/resnet-152.yml
+  Results:
+  - Dataset: ImageNet
+    Metrics:
+      Top 1 Accuracy: 78.31%
+      Top 5 Accuracy: 94.06%
+    Task: Image Classification
+  Weights: https://download.pytorch.org/models/resnet152-b121ed2d.pth

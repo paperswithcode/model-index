@@ -82,6 +82,11 @@ class Metadata(BaseModelIndex):
 
         lc_keys = lowercase_keys(d)
 
+        # common error: have metadata twice
+        if len(lc_keys) == 1 and "metadata" in lc_keys:
+            d = d[lc_keys["metadata"]]
+            lc_keys = lowercase_keys(d)
+
         dd = d.copy()
         for field_name in Metadata.COMMON_FIELDS:
             key = field_name.lower()

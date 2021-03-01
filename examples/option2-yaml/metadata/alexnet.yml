@@ -1,0 +1,24 @@
+Metadata:
+  Architecture:
+  - Convolution
+  - Dropout
+  - Dense Connections
+  - ReLU
+  - Max Pooling
+  - Softmax
+  Batch Size: 32
+  Epochs: 90
+  FLOPs: 1429383808
+  ID: alexnet
+  LR: 0.2
+  LR Gamma: 0.1
+  LR Step Size: 30
+  Momentum: 0.9
+  Parameters: 61100840
+  Training Data:
+  - ImageNet
+  Training Resources: 8x NVIDIA V100 GPUs
+  Training Techniques:
+  - Weight Decay
+  - SGD with Momentum
+  Weight Decay: 0.0001
