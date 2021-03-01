@@ -6,7 +6,7 @@ index, or an individual file:
 via the CLI:
 ```bash
 $ mi check  # Check the entire index (model-index.yml in current directory)
-$ mi check models/metadata/inception_v3.json    # check one file
+$ mi check models/metadata/inception_v3.yml    # check one file
 ```
 
 or programatically:
@@ -19,7 +19,7 @@ mi = modelindex.load("<path to model-index.yml>")
 mi.check()
 
 # check one file
-mi = modelindex.load("models/metadata/inception_v3.json")
+mi = modelindex.load("models/metadata/inception_v3.yml")
 mi.check()
 ```
 
