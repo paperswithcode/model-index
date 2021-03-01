@@ -2,10 +2,11 @@
 
 This is an example of how to use `model-index` inside your repository. 
 
-To try it out, put the [model-index.yml](model-index.yml) file in the root of your repository. 
+The `model-index.yml` is the main file tying together all the metadata. We recommend putting it in the root
+of your repository. 
 
-The `model-index.yml` file has metadata defined in two ways: inside markdown and inside yaml/json files.  
-You can choose whichever suits you better, or mix them. 
+This file can contain the metadata, or link to other files containing the metadata. You can have
+metadata either in markdown or yaml/json files. 
 
 ## Option 1: Markdown files
 
