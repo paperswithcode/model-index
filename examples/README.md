@@ -32,8 +32,8 @@ To use `model-index` like this, you can either simply add all of your model meta
 or split it up into multiple files as shown in [model-index.yml](https://github.com/paperswithcode/model-index/blob/main/examples/option2-yaml/model-index.yml) file.
 
 In this example we've split out the metadata into separate files in [metadata](option2-yaml/metadata) and
-linked it inside model definitions like this: `Metadata: metadata/alexnet.md`. We did the same with READMEs that
-are linked like this: `README: docs/alexnet.md`.  
+linked it inside model definitions like this: `Metadata: metadata/alexnet.yml` (pointing to [metadata/alexnet.yml](https://github.com/paperswithcode/model-index/blob/main/examples/option2-yaml/metadata/alexnet.yml)). We did the same with READMEs that
+are linked like this: `README: docs/alexnet.md` (pointing to [metadata/alexnet.md](https://raw.githubusercontent.com/paperswithcode/model-index/main/examples/option2-yaml/docs/alexnet.md)).  
 
 You can see how this looks like in the example [model-index.yml](https://github.com/paperswithcode/model-index/blob/main/examples/option2-yaml/model-index.yml) file
 
