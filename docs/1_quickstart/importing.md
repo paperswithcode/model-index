@@ -21,7 +21,7 @@ Both YAML and JSON are supported. The content of the file needs to conform to th
 structure specified for [Models](../2_datamodels/model.html), [Metadata](../2_datamodels/model.html#metadata) and 
 [Results](../2_datamodels/model.html#result). 
 
-So in this case, `incdeption_v3.yml` could look like this:
+So in this case, `inception_v3.yml` could look like this:
 
 ```yaml
 Batch Size: 120
