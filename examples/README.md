@@ -15,10 +15,10 @@ To use `model-index` like this, create a markdown file with the model descriptio
 add `model-index` metadata *inside a comment in the markdown file*. Putting in the comment means the file
 will still be human readable in GitHub, but will also contain all the metadata needed by model-index. 
 
-You can see an example of usage inside markdown here: [option1-markdown/docs/alexnet.md](option1_markdown/docs/alexnet.md)
-and [option1-markdown/docs/resnet.md](option1-markdown/docs/resnet.md).  
+You can see an example of usage inside markdown here: [docs/alexnet.md](https://raw.githubusercontent.com/paperswithcode/model-index/main/examples/option1-markdown/docs/alexnet.md)
+and [docs/resnet.md](https://raw.githubusercontent.com/paperswithcode/model-index/main/examples/option1-markdown/docs/resnet.md).  
 
-To include markdown files into the model index, simply import them into the root [option1-markdown/model-index.yml](option1-markdown/model-index.yml) file:
+To include markdown files into the model index, simply import them into the root [model-index.yml](https://github.com/paperswithcode/model-index/blob/main/examples/option1-markdown/model-index.yml) file:
 
 ```yaml
 Import:
@@ -30,9 +30,9 @@ Import:
 You can see the full example in [option2-yaml](option2-yaml) directory.
 
 To use `model-index` like this, you can either simply add all of your model metadata into `model-index.yml`,
-or split it up into multiple files as shown in [option2-yaml/model-index.yml](option2-yaml/model-index.yml) file.
+or split it up into multiple files as shown in [model-index.yml](https://github.com/paperswithcode/model-index/blob/main/examples/option2-yaml/model-index.yml) file.
 
-In this example we've split out the metadata into separate files in [option2-yml/metadata](option2-yaml/metadata) and
+In this example we've split out the metadata into separate files in [metadata](option2-yaml/metadata) and
 linked it inside model definitions like this: `Metadata: metadata/alexnet.md`. We did the same with READMEs that
 are linked like this: `README: docs/alexnet.md`.  
 
