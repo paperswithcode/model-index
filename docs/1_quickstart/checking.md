@@ -4,7 +4,7 @@ To ensure the model index doesn't have any errors in its metadata you can run an
 index, or an individual file:
 
 via the CLI:
-```shell script
+```bash
 $ mi check  # Check the entire index (model-index.yml in current directory)
 $ mi check models/metadata/inception_v3.json    # check one file
 ```
