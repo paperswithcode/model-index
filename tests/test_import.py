@@ -146,6 +146,10 @@ def test_wildcard_model_import():
 def test_models_import_wildcard():
     mi = modelindex.load("tests/test-mi/13_wildcard_model_imports/mi8.yml")
 
+    err = mi.check(silent=True)
+    assert len(err) == 1
+    assert "docs/inception-v3-readme.md" in err[0]
+
     assert len(mi.collections) == 1
     assert len(mi.models) == 2
 

@@ -36,6 +36,7 @@ class Model(BaseModelIndex):
                  readme: str = None,
                  in_collection: Union[str, List[str]] = None,
                  _filepath: str = None,
+                 _path_to_readme: str=None,
                  **kwargs,
                  ):
         """
@@ -51,6 +52,7 @@ class Model(BaseModelIndex):
             readme (str): path to the README file for the model
             in_collection (str, List): name of the collection to which the model belongs to
             _filepath: The file path to where the data was loaded from
+            _path_to_readme: Path to the markdown readme file if data is coming from there
             **kwargs: Any other custom fields
         """
 
@@ -93,6 +95,8 @@ class Model(BaseModelIndex):
         # Only non-empty items
         data = {k: v for k, v in d.items() if v is not None}
 
+        self._path_to_readme = _path_to_readme
+
         super().__init__(
             data=data,
             filepath=_filepath,
@@ -103,7 +107,7 @@ class Model(BaseModelIndex):
         if self.name is None or self.name == "":
             self.check_errors.add("Field 'Name' cannot be empty")
 
-        if self.readme and self.readme.endswith(".md") and len(self.readme) < 256:
+        if self.readme and self.readme.endswith(".md") and len(self.readme) < 256 and not self._path_to_readme:
             # check if the README exists
             fullpath = full_filepath(self.readme, self.filepath)
             if not os.path.isfile(fullpath):
@@ -149,6 +153,7 @@ class Model(BaseModelIndex):
 
         return cls(
             _filepath=_filepath,
+            _path_to_readme=_path_to_readme,
             **dd,
         )
 
