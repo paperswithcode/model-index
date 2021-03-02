@@ -49,11 +49,18 @@ def load_raw_from_markdown(path: str):
             parsed = yaml.load(comment, Loader=yaml.SafeLoader)
             if isinstance(parsed, dict):
                 lc_keys = lowercase_keys(parsed)
+                append = False
                 if "type" in lc_keys and (
                         parsed[lc_keys["type"]].lower() == "model-index"
                         or
                         parsed[lc_keys["type"]].lower() == "modelindex"
                 ):
+                    append = True
+                elif "models" in lc_keys or "collections" in lc_keys or "name" in lc_keys:
+                    # Guess that this is the right thing to import...
+                    append = True
+
+                if append:
                     metadata.append(parsed)
         except Exception:
             pass

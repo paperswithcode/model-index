@@ -107,7 +107,7 @@ class Model(BaseModelIndex):
         if self.name is None or self.name == "":
             self.check_errors.add("Field 'Name' cannot be empty")
 
-        if self.readme and self.readme.endswith(".md") and len(self.readme) < 256 and not self._path_to_readme:
+        if self._readme_is_filepath() and not self._path_to_readme:
             # check if the README exists
             fullpath = full_filepath(self.readme, self.filepath)
             if not os.path.isfile(fullpath):
@@ -184,6 +184,26 @@ class Model(BaseModelIndex):
             raise ValueError(f"Expected a model dict, but got "
                              f"something else in file '{fullpath}'")
 
+    def _readme_is_filepath(self):
+        return self.readme and self.readme.endswith(".md") and len(self.readme) < 256
+
+    def readme_content(self):
+        """Get the content of the README file (instead of just the path as returned by .readme())"""
+
+        if not self.readme:
+            return None
+        elif self._path_to_readme:
+            with open(self.filepath, "r") as f:
+                return f.read()
+        elif self._readme_is_filepath():
+            if self.filepath:
+                fullpath = full_filepath(self.readme, self.filepath)
+            else:
+                fullpath = self.readme
+            with open(fullpath, "r") as f:
+                return f.read()
+        else:
+            return self.readme
 
     # Getters
     @property

@@ -1,4 +1,3 @@
-<!--
 Models:
   - Name: Inception v3 - 120 epochs
     In Collection: Inception v3
@@ -11,6 +10,4 @@ Models:
           Top 1 Accuracy: 75.1%
           Top 5 Accuracy: 93.1%
     Weights: https://download.pytorch.org/models/inception_v3_google-120-1a9a5afd.pth
--->
-
-# Second here
+    README: docs/custom.md
