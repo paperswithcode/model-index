@@ -166,13 +166,13 @@ def test_models_import_wildcard():
 
 
 def test_readme_content():
-    mi = modelindex.load("tests/test-mi/14_readme_contents/")
+    mi = modelindex.load("tests/test-mi/15_readme_contents/")
 
     assert len(mi.models) == 2
     assert mi.models[0].readme_content() == "This is some custom readme here."
     assert mi.models[1].readme_content() == "Another custom readme"
 
-    mi = modelindex.load("tests/test-mi/14_readme_contents/mi2.yml")
+    mi = modelindex.load("tests/test-mi/15_readme_contents/mi2.yml")
 
     err = mi.check(silent=True)
     assert len(err) == 1
