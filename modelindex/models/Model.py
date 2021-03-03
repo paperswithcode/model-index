@@ -22,7 +22,8 @@ class Model(BaseModelIndex):
         "Weights",
         "Config",
         "README",
-        "In Collection"
+        "In Collection",
+        "Image",
     ]
 
     def __init__(self,
@@ -35,6 +36,7 @@ class Model(BaseModelIndex):
                  config: str = None,
                  readme: str = None,
                  in_collection: Union[str, List[str]] = None,
+                 image: str = None,
                  _filepath: str = None,
                  _path_to_readme: str=None,
                  **kwargs,
@@ -51,6 +53,7 @@ class Model(BaseModelIndex):
             config (str): URL to the config file
             readme (str): path to the README file for the model
             in_collection (str, List): name of the collection to which the model belongs to
+            image (str): path or URL to an image for the model
             _filepath: The file path to where the data was loaded from
             _path_to_readme: Path to the markdown readme file if data is coming from there
             **kwargs: Any other custom fields
@@ -89,6 +92,7 @@ class Model(BaseModelIndex):
             "Config": config,
             "README": readme,
             "In Collection": in_collection,
+            "Image": image,
             **kwargs,
         }
 
@@ -113,6 +117,11 @@ class Model(BaseModelIndex):
             if not os.path.isfile(fullpath):
                 self.check_errors.add(f"Path to README file {self.readme} is not a valid file.")
 
+        if self.image and not self.image.startswith("http"):
+            fullpath = full_filepath(self.image, self.filepath)
+            if not os.path.isfile(fullpath):
+                self.check_errors.add(f"Path to Image file {self.image} is not a valid file.")
+
     @classmethod
     def from_dict(cls, d: Dict, _filepath: str = None, _path_to_readme: str = None):
         """Create a Model from a dictionary.
@@ -134,6 +143,7 @@ class Model(BaseModelIndex):
             "metadata",
             "results",
             "in_collection",
+            "image",
         ]
 
         dd = d.copy()
@@ -251,6 +261,11 @@ class Model(BaseModelIndex):
         """Get the name of the collection of which this model is part of."""
         return self.data.get("In Collection", None)
 
+    @property
+    def image(self):
+        """Get the path or URL to the image for the model"""
+        return self.data.get("Image", None)
+
     # Setters
     @name.setter
     def name(self, value):
@@ -279,6 +294,10 @@ class Model(BaseModelIndex):
     @in_collection.setter
     def in_collection(self, value):
         self.data["In Collection"] = value
+
+    @image.setter
+    def image(self, value):
+        self.data["Image"] = value
 
     @metadata.setter
     def metadata(self, value):
