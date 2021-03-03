@@ -12,6 +12,7 @@ Model is represented by a dict with these common fields:
 - `Weights` - link to download the pretrained weights
 - `Config` - link to the config file used for training
 - `README` - the content of, or a link to the README.md file for the model
+- `Image` - path or URL to an image for this model
 - `In Collection`- name of the [Collection](collection.html) to which this model belongs.  
 
 The fields above will be automatically recognized by model-index, but you can
@@ -25,7 +26,7 @@ Metadata is a dict of common and custom metadata. The common
 fields are:
 
 - `FLOPs` - The number of FLOPs of the model
-- `Parameters` - The number of parameters of the model
+- `Parameters` - The total number of parameters of the model
 - `Epochs` - Number of training epochs
 - `Batch Size` - Input batch size
 - `Training Data` - Names of dataset on which the models is trained on
