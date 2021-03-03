@@ -27,20 +27,21 @@ def has_at_least_one_models_key(lc_keys):
     return len(model_keys.intersection(set(lc_keys))) >= 1
 
 
-def load_based_on_dict_field_guess(raw: Dict, path: str, md_path: str):
+def load_based_on_dict_field_guess(raw: Dict, path: str, md_path: str, is_root: bool = False):
     """Load from a dict by guessing it's type based on keys in the dict.
 
     Args:
         raw (dict): The dictionary we want to load in
         path (str): The path it was read from
         md_path (str): Path to the Markdown file (if dict coming from there)
+        is_root (bool): If this is the root for the whole project
 
     """
     keys_lowercase = [k.lower() for k in raw.keys()]
     if "models" in keys_lowercase \
             or "collections" in keys_lowercase \
             or "import" in keys_lowercase:
-        obj = ModelIndex.from_dict(raw, path)
+        obj = ModelIndex.from_dict(raw, path, is_root=is_root)
     elif "task" in keys_lowercase and "dataset" in keys_lowercase and "metrics" in keys_lowercase:
         obj = Result.from_dict(raw, path)
     elif "name" in keys_lowercase and has_at_least_one_models_key(keys_lowercase):
@@ -79,9 +80,9 @@ def load(path: str = "model-index.yml"):
     # Guess the type based on dict entries
     obj = None
     if isinstance(raw, dict) and raw:
-        obj = load_based_on_dict_field_guess(raw, path, md_path)
+        obj = load_based_on_dict_field_guess(raw, path, md_path, is_root=True)
     elif isinstance(raw, list) and raw:
-        obj_guess = load_based_on_dict_field_guess(raw[0], path, md_path)
+        obj_guess = load_based_on_dict_field_guess(raw[0], path, md_path, is_root=True)
         if isinstance(obj_guess, Result):
             return ResultList(raw, path)
         elif isinstance(obj_guess, Model):

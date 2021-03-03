@@ -18,13 +18,15 @@ class ModelIndex(BaseModelIndex):
     def __init__(self,
                  data: dict = None,
                  filepath: str = None,
-                 _path_to_readme: str = None
+                 _path_to_readme: str = None,
+                 is_root: bool = False,
                  ):
         """
         Args:
             data (dict): The root model index as a dictionary
             filepath (str): The path from which it was loaded
             _path_to_readme (str): The path to the readme file (if loaded from there)
+            is_root (bool): If this is the root ModelIndex instance for the whole project
         """
 
         check_errors = OrderedSet()
@@ -99,17 +101,41 @@ class ModelIndex(BaseModelIndex):
         )
 
         self.lc_keys = lowercase_keys(data)
+        self.is_root = is_root
+        if is_root:
+            self.build_models_with_collections()
+
+    def build_models_with_collections(self):
+        # Apply the metadata inheritance from the collection
+
+        col_by_name = {}
+        for col in self.collections:
+            col_by_name[col.name] = col
+
+        for model in self.models:
+            col_name = model.in_collection
+            if col_name:
+                if col_name in col_by_name:
+                    col = col_by_name[col_name]
+                    model.build_full_model(col)
+
+                else:
+                    model.check_errors.add(
+                        f"Invalid collection name `{col_name}`"
+                    )
+
 
     @staticmethod
-    def from_dict(d: dict, filepath: str = None, _path_to_readme: str = None):
+    def from_dict(d: dict, filepath: str = None, _path_to_readme: str = None, is_root: bool = False):
         """Construct a ModelIndex from a dictionary
 
         Args:
             data (dict): The root model index as a dictionary
             filepath (str): The path from which it was loaded
             _path_to_readme (str): Path to the README.md file if loaded from there
+            is_root (str): If this is the root ModelIndex for the whole project
         """
-        return ModelIndex(d, filepath, _path_to_readme)
+        return ModelIndex(d, filepath, _path_to_readme, is_root)
 
     @property
     def models(self) -> ModelList:

@@ -1,4 +1,5 @@
 import os
+import copy
 from typing import Dict, Union, List
 
 from ordered_set import OrderedSet
@@ -100,6 +101,7 @@ class Model(BaseModelIndex):
         data = {k: v for k, v in d.items() if v is not None}
 
         self._path_to_readme = _path_to_readme
+        self._full_model = self
 
         super().__init__(
             data=data,
@@ -197,6 +199,56 @@ class Model(BaseModelIndex):
     def _readme_is_filepath(self):
         return self.readme and self.readme.endswith(".md") and len(self.readme) < 256
 
+    def build_full_model(self, col):
+        # Builds a full model based on the parent collection
+        # col: Collection
+        model_full = copy.deepcopy(col)
+        self_copy = copy.deepcopy(self)
+
+        # Merge from src to dest dictionary by this key
+        def merge_by_key(d_dest, d_src):
+            for key in d_src.keys():
+                # if doesn't exist, just copy over
+                if key not in d_dest:
+                    d_dest[key] = d_src[key]
+                else:
+                    # if exists try to merge dicts and lists
+                    if isinstance(d_dest[key], list):
+                        if isinstance(d_src[key], list):
+                            d_dest[key].extend(d_src[key])
+                        else:
+                            d_dest[key].append(d_src[key])
+                    elif isinstance(d_dest[key], dict):
+                        if isinstance(d_src[key], dict):
+                            # copy values that don't exist
+                            for k, v in d_src[key]:
+                                if k not in d_dest[key]:
+                                    d_dest[key][k] = v
+                        else:
+                            d_dest[key] = d_src[key]
+                    else:
+                        # overwrite if not a list or dict
+                        d_dest[key] = d_src[key]
+
+        # merge all fields from this model
+        for key, value in self_copy.data.items():
+            if key == "Metadata":
+                if isinstance(model_full.metadata, Metadata) and isinstance(value, Metadata):
+                    merge_by_key(model_full.metadata.data, value.data)
+                else:
+                    model_full.metadata = value
+            elif key == "Results":
+                if isinstance(model_full.results, ResultList) and isinstance(value, ResultList):
+                    model_full.results.data.extend(value.data)
+                else:
+                    model_full.results = value
+            else:
+                # copy over if it doesn't exist in the collection
+                model_full.data[key] = value
+
+        self._full_model = model_full
+        return model_full
+
     def readme_content(self):
         """Get the content of the README file (instead of just the path as returned by .readme())"""
 
@@ -266,6 +318,11 @@ class Model(BaseModelIndex):
         """Get the path or URL to the image for the model"""
         return self.data.get("Image", None)
 
+    @property
+    def full_model(self):
+        """Get the model with all the inherited properties from the collection (read-only property)"""
+        return self._full_model
+
     # Setters
     @name.setter
     def name(self, value):
@@ -301,14 +358,14 @@ class Model(BaseModelIndex):
 
     @metadata.setter
     def metadata(self, value):
-        if value is not None and not isinstance(value, Metadata):
+        if value is not None and not isinstance(value, Metadata) and not isinstance(value, str):
             self.data["Metadata"] = Metadata.from_dict(value)
         else:
             self.data["Metadata"] = value
 
     @results.setter
     def results(self, value):
-        if value is not None and not isinstance(value, ResultList):
+        if value is not None and not isinstance(value, ResultList) and not isinstance(value, str):
             self.data["Results"] = ResultList(value)
         else:
             self.data["Results"] = value

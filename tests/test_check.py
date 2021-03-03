@@ -68,6 +68,9 @@ def test_results_check():
 
     mi = modelindex.load("tests/test-mi/10_import_meta_check")
 
+    assert len(mi.models) == 2
+    assert len(mi.collections) == 1
+
     assert mi.models[0].filepath.endswith("meta/m1.yml")
     msgs = mi.check(silent=True)
 
