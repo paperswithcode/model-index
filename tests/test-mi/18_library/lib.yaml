@@ -1,0 +1,7 @@
+Library:
+  Name: AllenNLP
+  Repository: 'https://github.com/allenai/allennlp-models'
+  Headline: 'An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks.'
+  Website: 'https://allennlp.org/'
+  Docs: 'https://docs.allennlp.org/'
+  README: docs/lib.md

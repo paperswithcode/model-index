@@ -2,6 +2,7 @@ from ordered_set import OrderedSet
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.models.CollectionList import CollectionList
+from modelindex.models.Library import Library
 from modelindex.models.ModelList import ModelList
 from modelindex.utils import lowercase_keys, load_any_file, full_filepath, load_any_files_wildcard, \
     expand_wildcard_path, merge_lists_data
@@ -37,6 +38,7 @@ class ModelIndex(BaseModelIndex):
         d = {
             "Models": ModelList(_filepath=filepath),
             "Collections": CollectionList(_filepath=filepath),
+            "Library": None,
         }
         lc_keys = lowercase_keys(data)
         if "models" in lc_keys:
@@ -73,6 +75,15 @@ class ModelIndex(BaseModelIndex):
 
             d["Collections"] = collections
 
+        if "library" in lc_keys:
+            lib = data[lc_keys["library"]]
+            if isinstance(lib, dict):
+                d["Library"] = Library.from_dict(lib, filepath)
+            elif isinstance(lib, str):
+                d["Library"] = Library.from_file(lib, filepath)
+            else:
+                check_errors.add("Mis-formatted `Library` entry: expected a dict or a filepath but got something else.")
+
         if "import" in lc_keys:
             imp = data[lc_keys["import"]]
 
@@ -89,8 +100,12 @@ class ModelIndex(BaseModelIndex):
                             for model in mi.models:
                                 d["Models"].add(model)
 
+                        if mi.collections:
                             for col in mi.collections:
                                 d["Collections"].add(col)
+
+                        if mi.library:
+                            d["Library"] = mi.library
                 except (IOError, ValueError) as e:
                     check_errors.add(str(e))
 
@@ -157,3 +172,12 @@ class ModelIndex(BaseModelIndex):
         """Set the list of collections in the ModelIndex"""
         self.data["Collections"] = value
 
+    @property
+    def library(self) -> Library:
+        """Get the library metadata"""
+        return self.data["Library"]
+
+    @library.setter
+    def library(self, value):
+        """Set the library metadata"""
+        self.data["Library"] = value

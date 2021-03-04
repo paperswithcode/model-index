@@ -1,0 +1,53 @@
+Library:
+  Name: AllenNLP
+  Repository: 'https://github.com/allenai/allennlp-models'
+  Headline: 'An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks.'
+  Website: 'https://allennlp.org/'
+  Docs: 'https://docs.allennlp.org/'
+  README: docs/lib.md
+
+Collections:
+  - Name: Inception v3
+    Metadata:
+      Training Data: ImageNet  
+      Training Techniques: 
+        - RMSProp
+        - Weight Decay
+        - Gradient Clipping
+        - Label Smoothing
+      Training Resources: 8x V100 GPUs
+      Architecture:
+        - Auxiliary Classifier
+        - Inception-v3 Module
+    Paper: https://arxiv.org/abs/1512.00567v3
+    Code: https://github.com/rwightman/pytorch-image-models/blob/timm/models/inception_v3.py#L442
+    README: docs/inception-v3-readme.md
+
+Models:
+  - Name: Inception v3 - 90 epochs
+    In Collection: Inception v3 
+    Metadata:
+      Epochs: 90
+    Results:
+      - Task: Image Classification
+        Dataset: ImageNet
+        Metrics:
+          Top 1 Accuracy: 74.67%
+          Top 5 Accuracy: 92.1%
+    Weights: https://download.pytorch.org/models/inception_v3_google-1a9a5a14.pth
+  
+  - Name: Inception v3 - 120 epochs
+    In Collection: Inception v3
+    Metadata:
+      Epochs: 120
+      Training Data: Reddit
+      Training Techniques:
+        - Transformers
+    Results:
+      - Task: Image Classification
+        Dataset: ImageNet
+        Metrics:
+          Top 1 Accuracy: 75.1%
+          Top 5 Accuracy: 93.1%
+    Weights: https://download.pytorch.org/models/inception_v3_google-120-1a9a5afd.pth
+    README: docs/inception-v3-readme-120.md
