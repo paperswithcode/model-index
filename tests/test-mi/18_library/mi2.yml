@@ -5,6 +5,7 @@ Library:
   Website: 'https://allennlp.org/'
   Docs: 'https://docs.allennlp.org/'
   README: docs/lib.md
+  Image: images/allennlp.png
 
 Collections:
   - Name: Inception v3

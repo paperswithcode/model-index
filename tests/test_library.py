@@ -20,6 +20,7 @@ def test_library():
     assert mi.library.headline == "An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks."
     assert mi.library.website == 'https://allennlp.org/'
     assert mi.library.docs == 'https://docs.allennlp.org/'
+    assert mi.library.image == "images/allennlp.png"
     assert "**AllenNLP** is a Natural Language Processing library " in mi.library.readme_content()
 
     mi = modelindex.load("tests/test-mi/18_library/mi2.yml")
@@ -31,6 +32,7 @@ def test_library():
     assert mi.library.headline == "An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks."
     assert mi.library.website == 'https://allennlp.org/'
     assert mi.library.docs == 'https://docs.allennlp.org/'
+    assert mi.library.image == "images/allennlp.png"
     assert "**AllenNLP** is a great Natural Language Processing library " in mi.library.readme_content()
 
     mi = modelindex.load("tests/test-mi/18_library/mi3.yml")
@@ -42,6 +44,7 @@ def test_library():
     assert mi.library.headline == "An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks."
     assert mi.library.website == 'https://allennlp.org/'
     assert mi.library.docs == 'https://docs.allennlp.org/'
+    assert mi.library.image == "images/allennlp.png"
     assert "**AllenNLP** is a great Natural Language Processing library " in mi.library.readme_content()
 
     mi = modelindex.load("tests/test-mi/18_library/mi4.yml")
@@ -53,6 +56,7 @@ def test_library():
     assert mi.library.headline == "An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks."
     assert mi.library.website == 'https://allennlp.org/'
     assert mi.library.docs == 'https://docs.allennlp.org/'
+    assert mi.library.image == "images/allennlp.png"
     assert "**AllenNLP** is a great Natural Language Processing library " in mi.library.readme_content()
 
 

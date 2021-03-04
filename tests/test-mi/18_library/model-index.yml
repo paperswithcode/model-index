@@ -4,6 +4,7 @@ Library:
   Headline: 'An Apache 2.0 NLP research library, built on PyTorch, for developing state-of-the-art deep learning models on a wide variety of linguistic tasks.'
   Website: 'https://allennlp.org/'
   Docs: 'https://docs.allennlp.org/'
+  Image: images/allennlp.png
   README: |
     ## AllenNLP
 

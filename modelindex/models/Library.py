@@ -21,6 +21,7 @@ class Library(BaseModelIndex):
         "Website",
         "Docs",
         "README",
+        "Image",
     ]
 
     def __init__(self,
@@ -30,6 +31,7 @@ class Library(BaseModelIndex):
                  website: str = None,
                  docs: str = None,
                  readme: str = None,
+                 image: str = None,
                  _filepath: str = None,
                  _path_to_readme: str = None,
                  **kwargs,
@@ -41,7 +43,8 @@ class Library(BaseModelIndex):
             headline (str): A short description that will appear below the title
             website (str): URL to the website of the library (if different from code repository)
             docs (str): URL to documentation
-            readme (str): path to the README file for the model
+            readme (str): path to the README file for the library
+            image (str): path or URL to an image for the library
             _filepath: The file path to where the data was loaded from
             _path_to_readme: Path to the markdown readme file if data is coming from there
             **kwargs: Any other custom fields
@@ -56,6 +59,7 @@ class Library(BaseModelIndex):
             "Website": website,
             "Docs": docs,
             "README": readme,
+            "Image": image,
             **kwargs,
         }
 
@@ -80,6 +84,11 @@ class Library(BaseModelIndex):
             if not os.path.isfile(fullpath):
                 self.check_errors.add(f"Path to README file {self.readme} is not a valid file.")
 
+        if self.image and not self.image.startswith("http"):
+            fullpath = full_filepath(self.image, self.filepath)
+            if not os.path.isfile(fullpath):
+                self.check_errors.add(f"Path to Image file {self.image} is not a valid file.")
+
     @classmethod
     def from_dict(cls, d: Dict, _filepath: str = None, _path_to_readme: str = None):
         """Create a Library from a dictionary.
@@ -98,6 +107,7 @@ class Library(BaseModelIndex):
             "website",
             "docs",
             "readme",
+            "image",
         ]
 
         dd = d.copy()
@@ -191,8 +201,13 @@ class Library(BaseModelIndex):
 
     @property
     def readme(self):
-        """Get the path to the model README"""
+        """Get the path to the library README"""
         return self.data.get("README", None)
+
+    @property
+    def image(self):
+        """Get the path or URL to the image for the library"""
+        return self.data.get("Image", None)
 
     # Setters
     @name.setter
@@ -218,4 +233,8 @@ class Library(BaseModelIndex):
     @readme.setter
     def readme(self, value):
         self.data["README"] = value
+
+    @image.setter
+    def image(self, value):
+        self.data["Image"] = value
 
