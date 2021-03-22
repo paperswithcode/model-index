@@ -46,6 +46,8 @@ def load_based_on_dict_field_guess(raw: Dict, path: str, md_path: str, is_root: 
         obj = Result.from_dict(raw, path)
     elif "name" in keys_lowercase and has_at_least_one_models_key(keys_lowercase):
         obj = Model.from_dict(raw, path, md_path)
+    elif "results" in keys_lowercase:
+        obj = Model.from_dict(raw, path, md_path)
     else:
         obj = Metadata.from_dict(raw, path)
 

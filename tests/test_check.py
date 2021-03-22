@@ -36,10 +36,9 @@ def test_results_check():
     mi = modelindex.load("tests/test-mi/09_check/mi4.yml")
 
     e = mi.models[0].results[0].check_errors
-    assert len(e) == 3
+    assert len(e) == 2
     assert "dataset" in e[0].lower()
-    assert "task" in e[1].lower()
-    assert "metrics" in e[2].lower()
+    assert "metrics" in e[1].lower()
 
     assert len(mi.models[0].metadata.check_errors) == 0
     assert len(mi.models[0].check_errors) == 0
@@ -50,7 +49,7 @@ def test_results_check():
     assert "not exist" in mi.models[0].check_errors[0]
 
     msgs = mi.check(silent=True)
-    assert len(msgs) == 4
+    assert len(msgs) == 3
 
     mi = modelindex.load("tests/test-mi/09_check/mi6.yml")
     assert len(mi.models[0].check_errors) == 2

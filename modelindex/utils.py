@@ -5,6 +5,7 @@ import yaml
 import json
 import markdown
 import glob
+import re
 from html.parser import HTMLParser
 
 
@@ -36,53 +37,77 @@ def load_raw_from_markdown(path: str):
     """
 
     with open(path, "r") as f:
-        md = markdown.markdown(f.read())
+        file_contents = f.read()
 
-    parser = CommentHTMLParser()
-    parser.feed(str(md))
-    comments = parser.extracted_comments
+    # parse the --- header --- info
+    yml_contents = None
+    if file_contents.startswith("---"):
+        end_inx = None
 
-    # try to interpret as a yaml file
-    metadata = []
-    for comment in comments:
-        try:
-            parsed = yaml.load(comment, Loader=yaml.SafeLoader)
-            if isinstance(parsed, dict):
-                lc_keys = lowercase_keys(parsed)
-                append = False
-                if "type" in lc_keys and (
-                        parsed[lc_keys["type"]].lower() == "model-index"
-                        or
-                        parsed[lc_keys["type"]].lower() == "modelindex"
-                ):
-                    append = True
-                elif "models" in lc_keys or "collections" in lc_keys or "name" in lc_keys:
-                    # Guess that this is the right thing to import...
-                    append = True
+        for m in re.finditer("\n--- *\n", file_contents):
+            end_inx = m.start()
+            break
 
-                if append:
-                    metadata.append(parsed)
-        except Exception:
-            pass
+        if end_inx:
+            yml_contents = file_contents[4:end_inx]
 
-    # if there are many metadata entries, merge them
-    meta_dict = {}
-    for m in metadata:
-        for key, value in m.items():
-            if key not in meta_dict:
-                meta_dict[key] = value
-            else:
-                cur = meta_dict[key]
-                if not isinstance(cur, list):
-                    cur = [cur]
-                if isinstance(value, list):
-                    cur.extend(value)
+    if yml_contents:
+        # markdown with a header
+        parsed = yaml.load(yml_contents, Loader=yaml.SafeLoader)
+        if isinstance(parsed, dict):
+            lc_keys = lowercase_keys(parsed)
+            if "model-index" in lc_keys:
+                mi_dict = parsed[lc_keys["model-index"]]
+                return mi_dict
+    else:
+        # normal markdown file with stuff in the comments
+        md = markdown.markdown(file_contents)
+
+        parser = CommentHTMLParser()
+        parser.feed(str(md))
+        comments = parser.extracted_comments
+
+        # try to interpret as a yaml file
+        metadata = []
+        for comment in comments:
+            try:
+                parsed = yaml.load(comment, Loader=yaml.SafeLoader)
+                if isinstance(parsed, dict):
+                    lc_keys = lowercase_keys(parsed)
+                    append = False
+                    if "type" in lc_keys and (
+                            parsed[lc_keys["type"]].lower() == "model-index"
+                            or
+                            parsed[lc_keys["type"]].lower() == "modelindex"
+                    ):
+                        append = True
+                    elif "models" in lc_keys or "collections" in lc_keys or "name" in lc_keys:
+                        # Guess that this is the right thing to import...
+                        append = True
+
+                    if append:
+                        metadata.append(parsed)
+            except Exception:
+                pass
+
+        # if there are many metadata entries, merge them
+        meta_dict = {}
+        for m in metadata:
+            for key, value in m.items():
+                if key not in meta_dict:
+                    meta_dict[key] = value
                 else:
-                    cur.append(value)
+                    cur = meta_dict[key]
+                    if not isinstance(cur, list):
+                        cur = [cur]
+                    if isinstance(value, list):
+                        cur.extend(value)
+                    else:
+                        cur.append(value)
 
-                meta_dict[key] = cur
+                    meta_dict[key] = cur
 
-    return meta_dict
+        return meta_dict
 
 
 def full_filepath(path: str, cur_filepath: str = None):

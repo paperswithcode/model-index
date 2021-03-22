@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 from modelindex.models.BaseModelIndex import BaseModelIndex
 from modelindex.utils import lowercase_keys, load_any_file, full_filepath
@@ -13,18 +13,41 @@ class Result(BaseModelIndex):
     ]
 
     def __init__(self,
-                 task: str,
-                 dataset: str,
-                 metrics: Dict,
+                 task: [str, Dict],
+                 dataset: [str, Dict],
+                 metrics: [Dict, List],
                  _filepath: str = None,
                  ):
         """
         Args:
-            task (str): The name of the ML task
-            dataset (str): The name of the dataset
-            metrics (dict): A dictionary of metrics
+            task (str, Dict): The name of the ML task, or dict with "name"
+            dataset (str, Dict): The name of the dataset, or dict with "name"
+            metrics (dict, List): A dictionary of metrics, or a list of dicts with "name" and "value"
             _filepath (str): Path to the file where the data was loaded from
         """
+
+        if isinstance(task, dict):
+            lc_keys = lowercase_keys(task)
+            if "name" in lc_keys:
+                task = task[lc_keys["name"]]
+
+        if isinstance(dataset, dict):
+            lc_keys = lowercase_keys(dataset)
+            if "name" in lc_keys:
+                dataset = dataset[lc_keys["name"]]
+
+        if isinstance(metrics, list):
+            metrics_out = {}
+            for m in metrics:
+                lc_keys = lowercase_keys(m)
+                if "name" in lc_keys and "value" in lc_keys:
+                    key = m[lc_keys["name"]]
+                    value = m[lc_keys["value"]]
+                    metrics_out[key] = value
+
+            if metrics_out:
+                metrics = metrics_out
+
         d = {
             "Task": task,
             "Dataset": dataset,

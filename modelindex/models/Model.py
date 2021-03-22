@@ -39,7 +39,7 @@ class Model(BaseModelIndex):
                  in_collection: Union[str, List[str]] = None,
                  image: str = None,
                  _filepath: str = None,
-                 _path_to_readme: str=None,
+                 _path_to_readme: str = None,
                  **kwargs,
                  ):
         """
