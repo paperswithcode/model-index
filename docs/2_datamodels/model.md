@@ -29,7 +29,7 @@ fields are:
 - `Parameters` - The total number of parameters of the model
 - `Epochs` - Number of training epochs
 - `Batch Size` - Input batch size
-- `Training Data` - Names of dataset on which the models is trained on
+- `Training Data` - Dataset names on which the models are trained (for full see [Datasets](https://paperswithcode.com/datasets) on Papers with Code)
 - `Training Techniques` - A list of training techniques (for the full list see 
 [Methods](https://paperswithcode.com/methods) on Papers with Code)
 - `Training Resources` - The hardware used for training
