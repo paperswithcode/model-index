@@ -1,6 +1,6 @@
 # Collection
 
-To keep related model together, you can create Collections. The metadata format for collections is the same as for models
+To keep related models together, you can create Collections. The metadata format for collections is the same as for models
 and all member models **inherit** all the metadata and can override/add to it. 
 
 The fields of a collection are exactly the same as fields of a [Model](model.html) - see the description there. 
